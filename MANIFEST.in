@@ -1,0 +1,4 @@
+include README.md
+include requirements.txt
+recursive-include core_explore_periodic_table_app/static *
+recursive-include core_explore_periodic_table_app/templates *
