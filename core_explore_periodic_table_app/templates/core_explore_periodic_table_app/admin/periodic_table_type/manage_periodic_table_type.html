@@ -1,0 +1,12 @@
+{% extends "core_main_app/_render/admin/theme/tools/section.html" %}
+{% load staticfiles %}
+
+{% block section_title %}Periodic Table Manager{% endblock %}
+
+{% block section_content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'core_explore_periodic_table_app/admin/periodic_table_type/selector/selector.html' %}
+        </div>
+    </div>
+{% endblock %}
