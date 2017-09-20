@@ -97,20 +97,24 @@ class PeriodicTableSaveQueryView(SaveQueryView):
 
         try:
             # Get selected values from the periodic table
-            periodic_table_values = json.loads(request.POST.get('periodic_table_values', None))
+            periodic_table_values = json.loads(request.POST.get('periodic_table_values', []))
 
-            # Get the template id linked to the periodic table
-            template_id = periodic_table_type_api.get_first().type_version_manager.current
+            if len(periodic_table_values) > 0:
+                # Get the template id linked to the periodic table
+                template_id = periodic_table_type_api.get_first().type_version_manager.current
 
-            query = self.fields_to_query_func(periodic_table_values)
-            displayed_query = fields_to_pretty_query(periodic_table_values, "Element")
+                query = self.fields_to_query_func(periodic_table_values)
+                displayed_query = fields_to_pretty_query(periodic_table_values, "Element")
 
-            # save the query in the data base
-            saved_query = SavedQuery(user_id=str(request.user.id),
-                                     template=template_api.get(template_id),
-                                     query=json.dumps(query),
-                                     displayed_query=displayed_query)
-            saved_query_api.upsert(saved_query)
+                # save the query in the data base
+                saved_query = SavedQuery(user_id=str(request.user.id),
+                                         template=template_api.get(template_id),
+                                         query=json.dumps(query),
+                                         displayed_query=displayed_query)
+                saved_query_api.upsert(saved_query)
+            else:
+                return HttpResponseBadRequest('You have to select at least one element.',
+                                              content_type='application/javascript')
         except Exception as e:
             return HttpResponseBadRequest(e.message, content_type='application/javascript')
         return HttpResponse(json.dumps({}), content_type='application/javascript')
