@@ -6,6 +6,7 @@ from django.http.response import HttpResponseBadRequest
 
 import core_explore_example_app.components.explore_data_structure.api as explore_data_structure_api
 import core_explore_periodic_table_app.components.periodic_table_type.api as periodic_table_type_api
+import core_main_app.components.template.api as template_api
 import core_main_app.components.version_manager.api as version_manager_api
 from core_explore_periodic_table_app.apps import CoreExplorePeriodicTableAppConfig
 from core_explore_periodic_table_app.views.admin.forms import AssociatedPeriodicTableTypeForm
@@ -74,8 +75,9 @@ def _manage_periodic_table_index_post(request):
         periodic_table_type.type_version_manager = version_manager
         periodic_table_type_api.upsert(periodic_table_type)
         # create linked data structure
+        template = template_api.get(version_manager.current)
         explore_data_structure_api.create_and_get_explore_data_structure(request,
-                                                                         version_manager.current,
-                                                                         CoreExplorePeriodicTableAppConfig.name)
+                                                                         template,
+                                                                         CoreExplorePeriodicTableAppConfig)
 
     return _manage_periodic_table_index_get(request)

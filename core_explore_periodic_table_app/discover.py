@@ -46,7 +46,7 @@ def discover_periodic_table(app_name):
             request.session = dict()
             # Generate relative data structure
             explore_data_structure_api.create_and_get_explore_data_structure(request,
-                                                                             type_version_manager.current,
+                                                                             type_object,
                                                                              app_name)
     except Exception, e:
         print(e.message)
