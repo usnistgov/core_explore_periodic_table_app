@@ -78,6 +78,6 @@ def _manage_periodic_table_index_post(request):
         template = template_api.get(version_manager.current)
         explore_data_structure_api.create_and_get_explore_data_structure(request,
                                                                          template,
-                                                                         CoreExplorePeriodicTableAppConfig)
+                                                                         CoreExplorePeriodicTableAppConfig.name)
 
     return _manage_periodic_table_index_get(request)

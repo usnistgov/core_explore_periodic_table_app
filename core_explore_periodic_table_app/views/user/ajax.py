@@ -134,6 +134,8 @@ def _get_values_from_json_query(return_value_list, json_query):
         if key == "$and" or key == "$or":
             for item in value:
                 _get_values_from_json_query(return_value_list, item)
+        if key == "list_content" or key == "$elemMatch":
+            _get_values_from_json_query(return_value_list, value)
         if key == "value":
             return_value_list.add(value)
 
