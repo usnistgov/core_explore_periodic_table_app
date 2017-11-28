@@ -1,3 +1,4 @@
-core_main_app==1.0.0-alpha5
-core_parser_app==1.0.0-alpha5
-core_explore_example_type_app==1.0.0-alpha3
+Django==1.11.7
+# Installs: django-mongoengine==0.2.1
+git+https://github.com/MongoEngine/django-mongoengine
+django-simple-menu==1.2.1

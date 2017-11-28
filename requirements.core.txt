@@ -1,0 +1,5 @@
+core-composer-app==1.0.0-alpha5
+core-explore-common-app==1.0.0-alpha5
+core-explore-example-app==1.0.0-alpha5
+core-explore-example-type-app==1.0.0-alpha3
+core-main-app==1.0.0-alpha5
