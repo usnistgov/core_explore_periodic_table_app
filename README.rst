@@ -16,9 +16,16 @@ Quick start
       'core_explore_periodic_table_app',
     ]
 
-2. Include the core_explore_periodic_table_app URLconf in your project urls.py
+2. Include the core_explore_example_type_app URLconf in your project urls.py
+----------------------------------------------------------------------------
+
+.. code:: python
+
+    url(r'^explore/type/example/', include('core_explore_example_type_app.urls')),
+
+3. Include the core_explore_periodic_table_app URLconf in your project urls.py
 ------------------------------------------------------------------------------
 
 .. code:: python
 
-      url(r'^explore/periodic_table/', include("core_explore_periodic_table_app.urls")),
+    url(r'^explore/periodic_table/', include("core_explore_periodic_table_app.urls")),

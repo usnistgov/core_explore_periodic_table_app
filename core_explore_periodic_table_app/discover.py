@@ -41,12 +41,8 @@ def discover_periodic_table(app_name):
             periodic_table_type = PeriodicTableType(type_version_manager)
             periodic_table_type_api.upsert(periodic_table_type)
 
-            # TODO: Remove this mocked request once the parser does not use sessions.
-            request = HttpRequest()
-            request.session = dict()
             # Generate relative data structure
-            explore_data_structure_api.create_and_get_explore_data_structure(request,
-                                                                             type_object,
+            explore_data_structure_api.create_and_get_explore_data_structure(type_object,
                                                                              app_name)
     except Exception, e:
         print(e.message)
