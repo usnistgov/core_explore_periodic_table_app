@@ -94,7 +94,7 @@ var addSavedQueryToPeriodicTable = function(savedQueryID){
  * set all onclick button of save queries table
  */
 var setOnclickActionForQueryTableButtons = function() {
-    $("#queriesTable span.fa-arrow-circle-up").each(function (index, element) {
+    $("#queriesTable span.add-query").each(function (index, element) {
         var attr_value = $(element).attr('onclick');
         $(element).attr('onclick', attr_value.replace("addSavedQueryToForm", "addSavedQueryToPeriodicTable"));
     });
