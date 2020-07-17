@@ -19,7 +19,9 @@ def fields_to_query(values):
     path = get_type_name()
     # build the query
     for value in values:
-        criteria = common_mongo_query.build_criteria(path, "is", value, path, "xsd", is_not=False, use_wildcard=True)
+        criteria = common_mongo_query.build_criteria(
+            path, "is", value, path, "xsd", is_not=False, use_wildcard=True
+        )
         if values.index(value) == 0:
             query.update(criteria)
         else:
@@ -36,9 +38,9 @@ def get_type_name():
     # Get the template id linked to the periodic table
     template_id = periodic_table_type_api.get_first().type_version_manager.current
     # Get the template's data structure
-    explore_data_structure = explore_data_structure_api. \
-        get_by_user_id_and_template_id(CoreExplorePeriodicTableAppConfig.name,
-                                       template_id)
+    explore_data_structure = explore_data_structure_api.get_by_user_id_and_template_id(
+        CoreExplorePeriodicTableAppConfig.name, template_id
+    )
 
     # Get the path from this data structure (here it's the name of the option)
-    return explore_data_structure.data_structure_element_root.options['name']
+    return explore_data_structure.data_structure_element_root.options["name"]

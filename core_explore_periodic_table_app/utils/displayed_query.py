@@ -1,6 +1,9 @@
 """Util to build user readable queries
 """
-from core_explore_example_app.utils.displayed_query import build_pretty_criteria, build_and_pretty_criteria
+from core_explore_example_app.utils.displayed_query import (
+    build_pretty_criteria,
+    build_and_pretty_criteria,
+)
 
 
 def fields_to_pretty_query(values, path):

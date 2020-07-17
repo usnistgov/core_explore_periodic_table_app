@@ -7,7 +7,8 @@ from core_explore_periodic_table_app import discover
 class CoreExplorePeriodicTableAppConfig(AppConfig):
     """ Periodic Table configuration
     """
-    name = 'core_explore_periodic_table_app'
+
+    name = "core_explore_periodic_table_app"
     verbose_name = "Core Periodic table App Config"
 
     def ready(self):

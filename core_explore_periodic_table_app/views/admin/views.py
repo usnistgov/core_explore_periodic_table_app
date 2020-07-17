@@ -9,7 +9,9 @@ import core_explore_periodic_table_app.components.periodic_table_type.api as per
 import core_main_app.components.template.api as template_api
 import core_main_app.components.version_manager.api as version_manager_api
 from core_explore_periodic_table_app.apps import CoreExplorePeriodicTableAppConfig
-from core_explore_periodic_table_app.views.admin.forms import AssociatedPeriodicTableTypeForm
+from core_explore_periodic_table_app.views.admin.forms import (
+    AssociatedPeriodicTableTypeForm,
+)
 from core_main_app.utils.rendering import admin_render
 
 
@@ -24,12 +26,12 @@ def manage_periodic_table_index(request):
 
     """
     try:
-        if request.method == 'POST':
+        if request.method == "POST":
             return _manage_periodic_table_index_post(request)
         else:
             return _manage_periodic_table_index_get(request)
     except Exception as e:
-        return HttpResponseBadRequest(e.message)
+        return HttpResponseBadRequest(str(e))
 
 
 def _manage_periodic_table_index_get(request):
@@ -43,16 +45,16 @@ def _manage_periodic_table_index_get(request):
     """
     # load the form
     periodic_table_type = periodic_table_type_api.get_first()
-    data_form = {'types_manager': periodic_table_type.type_version_manager.id}
+    data_form = {"types_manager": periodic_table_type.type_version_manager.id}
     associated_form = AssociatedPeriodicTableTypeForm(data_form)
 
-    context = {
-        'associated_form': associated_form
-    }
+    context = {"associated_form": associated_form}
 
-    return admin_render(request,
-                        'core_explore_periodic_table_app/admin/periodic_table_type/manage_periodic_table_type.html',
-                        context=context)
+    return admin_render(
+        request,
+        "core_explore_periodic_table_app/admin/periodic_table_type/manage_periodic_table_type.html",
+        context=context,
+    )
 
 
 def _manage_periodic_table_index_post(request):
@@ -65,7 +67,7 @@ def _manage_periodic_table_index_post(request):
 
     """
     # get the new id
-    type_manager_id = request.POST.get('types_manager', None)
+    type_manager_id = request.POST.get("types_manager", None)
 
     if type_manager_id is not None:
         # get the version manager
@@ -76,7 +78,8 @@ def _manage_periodic_table_index_post(request):
         periodic_table_type_api.upsert(periodic_table_type)
         # create linked data structure
         template = template_api.get(version_manager.current)
-        explore_data_structure_api.create_and_get_explore_data_structure(template,
-                                                                         CoreExplorePeriodicTableAppConfig.name)
+        explore_data_structure_api.create_and_get_explore_data_structure(
+            template, CoreExplorePeriodicTableAppConfig.name
+        )
 
     return _manage_periodic_table_index_get(request)

@@ -1,6 +1,8 @@
 """ PeriodicTableType api
 """
-from core_explore_periodic_table_app.components.periodic_table_type.models import PeriodicTableType
+from core_explore_periodic_table_app.components.periodic_table_type.models import (
+    PeriodicTableType,
+)
 
 
 def get_all():

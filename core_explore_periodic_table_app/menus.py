@@ -1,13 +1,13 @@
 """ Add Explore Period Table in main menu
 """
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from menu import Menu, MenuItem
 
-
 Menu.add_item(
-    "main", MenuItem("Query by Periodic Table", reverse("core_explore_periodic_table_index"))
-)
+    "explorer",
+    MenuItem("Query by Periodic Table", reverse("core_explore_periodic_table_index")),
+),
 
 periodic_table_children = (
     MenuItem("Settings", reverse("admin:manage_periodic_table_index"), icon="gear"),
@@ -16,5 +16,3 @@ periodic_table_children = (
 Menu.add_item(
     "admin", MenuItem("PERIODIC TABLE", None, children=periodic_table_children)
 )
-
-

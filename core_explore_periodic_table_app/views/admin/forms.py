@@ -8,11 +8,12 @@ import core_composer_app.components.type_version_manager.api as type_version_man
 class AssociatedPeriodicTableTypeForm(forms.Form):
     """ Associated Periodic Table Type form
     """
-    types_manager = forms.ChoiceField(label='', required=False)
+
+    types_manager = forms.ChoiceField(label="", required=False)
 
     def __init__(self, *args, **kwargs):
         super(AssociatedPeriodicTableTypeForm, self).__init__(*args, **kwargs)
-        self.fields['types_manager'].choices = _get_types_versions()
+        self.fields["types_manager"].choices = _get_types_versions()
 
 
 def _get_types_versions():

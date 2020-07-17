@@ -7,6 +7,7 @@ from core_composer_app.components.type_version_manager.models import TypeVersion
 class PeriodicTableType(Document):
     """ Periodic Table Type configuration object
     """
+
     type_version_manager = fields.ReferenceField(TypeVersionManager)
 
     @staticmethod
