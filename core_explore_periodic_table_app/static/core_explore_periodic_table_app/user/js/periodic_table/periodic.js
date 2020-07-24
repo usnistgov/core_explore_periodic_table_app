@@ -1,126 +1,177 @@
-var chimical_element_selected = new Array();
+/** Search by Periodic Table script **/
+
+let chemical_element_selected = new Array();
+const SELECT_ALL_LABEL = "Select All";
+const UNSELECT_ALL_LABEL = "Unselect All";
+const global_event = {
+    input_id: 'id_global_templates',
+    button_selector: '.selectAllGlobalTemplateButton'
+}
+
+const user_event = {
+    input_id: 'id_user_templates',
+    button_selector: '.selectAllUserTemplateButton'
+}
 
 $( document ).ready(function() {
-    // unbind the event set in the html / bind the event relative to the periodic table
-    $("#queryBuilder .btn-danger").attr('onclick', "").click(clearPeriodicTableCriteria);
-    $("#queryBuilder .btn-secondary").attr('onclick', "").click(savePeriodicTableQuery);
-    $("#queryBuilder .btn-primary").attr('onclick', "").click(submitPeriodicTableQuery);
-    setOnclickActionForQueryTableButtons();
+    let jqElementsField = $("#id_elements");
+    let cleanedElementInput = clean_elements_input(jqElementsField.val());
+    // bind the event set in the html / bind the event relative to the periodic table
+    $("#periodic-clear").on('click', clearPeriodicTableCriteria);
+    // init the chemical_element_selected table with the form value
+    chemical_element_selected = jqElementsField.val() !== "" ?
+        cleanedElementInput.split(",")
+        : [];
+    /**
+     * When click on table's element
+     */
+    $(document).on('click', '.periodic-table td.p-elem', function(event) {
+        let clicked_value = $(this).text();
+        let element_index = chemical_element_selected.indexOf(clicked_value);
+
+        if(element_index == -1){
+            chemical_element_selected.push(clicked_value);
+            $(this).addClass('selected');
+        }else{
+            chemical_element_selected.splice(element_index, 1);
+            $(this).removeClass('selected');
+        }
+
+        // update the input value
+        jqElementsField.val(chemical_element_selected.join(","));
+    });
+
+    // set the element input value
+    jqElementsField.val(cleanedElementInput);
+
+    // set the periodic table to the env state
+    addSavedQueryToPeriodicTable();
+    initSelectAllTemplate();
+    initSortingAutoSubmit();
 });
 
 /**
- * When click on table's element
+ * Initialize select template all button
  */
-$(document).on('click', '.periodic-table td.p-elem', function(event) {
-    var clicked_value = $(this).text();
-    var element_index = chimical_element_selected.indexOf(clicked_value);
-    if(element_index == -1){
-        chimical_element_selected.push(clicked_value);
-        $(this).addClass('selected');
-    }else{
-        chimical_element_selected.splice(element_index, 1);
-        $(this).removeClass('selected');
+let initSelectAllTemplate = function() {
+    $(".selectAllGlobalTemplateButton").on("click", global_event, selectAllTemplate);
+    $(".selectAllUserTemplateButton").on("click", user_event, selectAllTemplate);
+    $("input[id^='id_global_templates']").each(function(i) {
+        $(this).on("change", global_event, checkIfAllTemplateSelected);
+    });
+    $("input[id^='id_user_templates']").each(function(i) {
+        $(this).on("change", user_event, checkIfAllTemplateSelected);
+    });
+    checkIfAllTemplateSelected({ data: global_event });
+    checkIfAllTemplateSelected({ data: user_event });
+}
+
+/**
+ * Select all Template function
+ */
+let selectAllTemplate = function(event) {
+    let selectAll = false;
+    if ($(event.data.button_selector).html().trim() == SELECT_ALL_LABEL) {
+        selectAll = true;
+        $(event.data.button_selector).html(UNSELECT_ALL_LABEL);
+    } else {
+        $(event.data.button_selector).html(SELECT_ALL_LABEL);
     }
-});
+    $("input[id^=" + event.data.input_id + "]").each(function(i) {
+        $(this).prop("checked", selectAll);
+    });
+}
+
+/**
+ * check if all templates are selected
+ */
+let checkIfAllTemplateSelected = function(event) {
+    let allSelected = true;
+    $("input[id^=" + event.data.input_id + "]").each(function(i) {
+        if($(this).prop("checked") == false) {
+            allSelected = false;
+            return false;
+        }
+    });
+
+    if (allSelected) {
+        $(event.data.button_selector).html(UNSELECT_ALL_LABEL);
+    } else {
+        $(event.data.button_selector).html(SELECT_ALL_LABEL);
+    }
+}
 
 
 /**
- * AJAX call, clear current set of criteria
+ * Clear current set of criteria
  */
-var clearPeriodicTableCriteria = function(){
+let clearPeriodicTableCriteria = function(){
     // clear all selection elements
-    chimical_element_selected = new Array();
+    chemical_element_selected = new Array();
     // remove the selected class for all selected element
     $.each($('.selected'), function(){
         $(this).removeClass('selected');
     });
 };
 
+let initSortingAutoSubmit = function() {
+    // waiting for the end of the AJAX call result DOM injection
+    let MAX_INTERVAL_ITER = 10;
+    let iteration = 0;
+
+    let interval = setInterval(function() {
+        iteration++;
+        if (iteration >= MAX_INTERVAL_ITER) clearInterval(interval);
+        if ($(".filter-dropdown-menu").length > 0) {
+            clearInterval(interval);
+            $(".dropdown-menu.tools-menu.filter-dropdown-menu li").click(debounce(function() {
+                submitForm();
+            }, SORTING_SUBMIT_DELAY));
+        }
+    }, 500);
+}
 
 /**
- * AJAX call, save the query
+ * Submit the form
  */
-var savePeriodicTableQuery = function(){
-    $.ajax({
-        url : savePeriodicTableUrlQueryUrl,
-        type : "POST",
-        dataType: "json",
-        data : {
-        	'periodic_table_values': JSON.stringify(chimical_element_selected)
-        },
-        success: function(data){
-            $('#queriesTable').load(reloadBuildQueryUrl +  ' #queriesTable', function() {
-                setOnclickActionForQueryTableButtons();
-            });
-            clearPeriodicTableCriteria();
-        },
-        error: function(data){
-            showErrorModal(data.responseText);
-        }
-    });
-};
+let submitForm = function () {
+    $("#form_search").submit();
+}
 
 
 /**
  * AJAX call, insert a saved query in the periodic table
  * @param savedQueryID id of the query to insert
  */
-var addSavedQueryToPeriodicTable = function(savedQueryID){
-    $.ajax({
-        url : getSavedQueryValuesUrl,
-        type : "GET",
-        dataType: "json",
-        data : {
-        	savedQueryID: savedQueryID
-        },
-        success: function(data){
-            // select periodic table values
-            $('.periodic-table tr td').filter(function(){
-                if (data.indexOf($(this).text()) >= 0){
-                    $(this).addClass('selected');
-                }
-            });
-
-            // re init the list and populate him with all values
-            chimical_element_selected = new Array();
-            $.each($('.periodic-table .selected'), function(index, element){
-                chimical_element_selected.push($(element).text());
-            });
+let addSavedQueryToPeriodicTable = function(savedQueryID){
+    // select periodic table values
+    $('.periodic-table tr td').filter(function(){
+        if (chemical_element_selected.indexOf($(this).text()) >= 0){
+            $(this).addClass('selected');
         }
-    });
-};
-
-/**
- * set all onclick button of save queries table
- */
-var setOnclickActionForQueryTableButtons = function() {
-    $("#queriesTable span.add-query").each(function (index, element) {
-        var attr_value = $(element).attr('onclick');
-        $(element).attr('onclick', attr_value.replace("addSavedQueryToForm", "addSavedQueryToPeriodicTable"));
     });
 };
 
 
 /**
- * AJAX call, execute query and redirects to result page
+ * Clean the input string
+ * @param inputString
  */
-var submitPeriodicTableQuery = function(){
-    var queryID = $("#query_id").html();
+let clean_elements_input = (inputString) => {
+    let cleanedString = '';
+    let splitedElements = inputString.split(",");
 
-    // get query from form
-    $.ajax({
-        url : submitQueryUrl,
-        type : "POST",
-        dataType: "json",
-        data : {
-            'selectedValues': JSON.stringify(chimical_element_selected),
-            'queryID': queryID
-        },
-        success: function(data){
-            window.location = resultsUrl;
-        },
-        error: function(data){
-            showErrorModal(data.responseText);
-        }
+    splitedElements.forEach((element, index)=>{
+        let splitedElement = element.split(":");
+
+        if(splitedElement && splitedElement.length > 1)
+            cleanedString += splitedElement[1];
+        else if (splitedElement && splitedElement.length > 0)
+            cleanedString += splitedElement[0];
+
+        if (index !== splitedElements.length -1)
+            cleanedString += ","
     });
-};
+
+    return cleanedString;
+}

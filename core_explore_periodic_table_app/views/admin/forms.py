@@ -2,21 +2,31 @@
 """
 from django import forms
 
-import core_composer_app.components.type_version_manager.api as type_version_manager_api
+from core_explore_keyword_app.components.search_operator import (
+    api as search_operator_api,
+)
+from core_explore_periodic_table_app.components.search_operator_mapping import (
+    api as search_operator_mapping_api,
+)
 
 
-class AssociatedPeriodicTableTypeForm(forms.Form):
-    """ Associated Periodic Table Type form
+def _initial_form():
+    """ Set the initial state of the form.
+
+    Returns:
+        List of fields select.
+
     """
+    search_operator_mapping = search_operator_mapping_api.get_all()
+    result = []
 
-    types_manager = forms.ChoiceField(label="", required=False)
+    for mapping in search_operator_mapping:
+        result.append(mapping.search_operator_id)
 
-    def __init__(self, *args, **kwargs):
-        super(AssociatedPeriodicTableTypeForm, self).__init__(*args, **kwargs)
-        self.fields["types_manager"].choices = _get_types_versions()
+    return result
 
 
-def _get_types_versions():
+def _get_search_operators():
     """ Get types versions.
 
     Returns:
@@ -26,10 +36,27 @@ def _get_types_versions():
     type_list = []
     try:
         # display all global types
-        type_version_list = type_version_manager_api.get_active_global_version_manager()
-        for type_item in type_version_list:
-            type_list.append((type_item.id, type_item.title))
+        all_search_operator_list = search_operator_api.get_all()
+        for so in all_search_operator_list:
+            type_list.append((so.id, so.name))
     except Exception:
         pass
 
     return type_list
+
+
+class AssociatedPeriodicTableSearchOperatorForm(forms.Form):
+    """ Associated Periodic Table Type form
+    """
+
+    search_operator_list = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Search operator list",
+        error_messages="",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AssociatedPeriodicTableSearchOperatorForm, self).__init__(*args, **kwargs)
+        self.fields["search_operator_list"].initial = _initial_form()
+        self.fields["search_operator_list"].choices = _get_search_operators()

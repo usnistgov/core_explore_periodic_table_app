@@ -1,0 +1,1 @@
+let persistentQueryUrl = "{% url 'core_explore_periodic_table_get_persistent_query_url' %}";

@@ -1,4 +1,11 @@
+.periodic-table-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
 .periodic-table {
+    width: 100%;
     background-color: white;
     border: 0;
     border-collapse: collapse;
@@ -86,4 +93,8 @@ table.periodic-table tr td.darkgray {
     background-color: #c0c0c0;
 }
 
-
+@media all and (max-width: 992px) {
+    .periodic-table-container{
+        flex-direction: column;
+    }
+}

@@ -1,16 +1,20 @@
 """ core explore periodic table admin views
 """
-
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseBadRequest
 
-import core_explore_example_app.components.explore_data_structure.api as explore_data_structure_api
-import core_explore_periodic_table_app.components.periodic_table_type.api as periodic_table_type_api
-import core_main_app.components.template.api as template_api
-import core_main_app.components.version_manager.api as version_manager_api
-from core_explore_periodic_table_app.apps import CoreExplorePeriodicTableAppConfig
+from core_explore_keyword_app.components.search_operator import (
+    api as search_operator_api,
+)
+from core_explore_periodic_table_app.components.search_operator_mapping import (
+    api as search_operator_mapping_api,
+)
+from core_explore_periodic_table_app.components.search_operator_mapping.models import (
+    SearchOperatorMapping,
+)
 from core_explore_periodic_table_app.views.admin.forms import (
-    AssociatedPeriodicTableTypeForm,
+    AssociatedPeriodicTableSearchOperatorForm,
 )
 from core_main_app.utils.rendering import admin_render
 
@@ -44,9 +48,8 @@ def _manage_periodic_table_index_get(request):
 
     """
     # load the form
-    periodic_table_type = periodic_table_type_api.get_first()
-    data_form = {"types_manager": periodic_table_type.type_version_manager.id}
-    associated_form = AssociatedPeriodicTableTypeForm(data_form)
+    associated_form = AssociatedPeriodicTableSearchOperatorForm()
+    assets = {"css": ["core_explore_periodic_table_app/admin/form.css"]}
 
     context = {"associated_form": associated_form}
 
@@ -54,6 +57,7 @@ def _manage_periodic_table_index_get(request):
         request,
         "core_explore_periodic_table_app/admin/periodic_table_type/manage_periodic_table_type.html",
         context=context,
+        assets=assets,
     )
 
 
@@ -67,19 +71,46 @@ def _manage_periodic_table_index_post(request):
 
     """
     # get the new id
-    type_manager_id = request.POST.get("types_manager", None)
+    selected_search_operator_list = request.POST.getlist("search_operator_list")
+    search_operator_mapping = list(search_operator_mapping_api.get_all())
+    search_operator_list = list(search_operator_api.get_all())
 
-    if type_manager_id is not None:
-        # get the version manager
-        version_manager = version_manager_api.get(type_manager_id)
-        # upsert the periodic table type
-        periodic_table_type = periodic_table_type_api.get_first()
-        periodic_table_type.type_version_manager = version_manager
-        periodic_table_type_api.upsert(periodic_table_type)
-        # create linked data structure
-        template = template_api.get(version_manager.current)
-        explore_data_structure_api.create_and_get_explore_data_structure(
-            template, CoreExplorePeriodicTableAppConfig.name
+    for search_operator in search_operator_list:
+        find_in_mapping = next(
+            (
+                x
+                for x in search_operator_mapping
+                if x.search_operator_id == str(search_operator.id)
+            ),
+            None,
         )
+        find_in_selected = next(
+            (y for y in selected_search_operator_list if y == str(search_operator.id)),
+            None,
+        )
+        if find_in_mapping and not find_in_selected:
+            # delete the mapping
+            current_search_operator_mapping = search_operator_mapping_api.get_by_search_operator_id(
+                search_operator.id
+            )
+            search_operator_mapping_api.delete(current_search_operator_mapping)
+        elif not find_in_mapping and find_in_selected:
+            # add the mapping
+            search_operator_mapping_api.upsert(
+                SearchOperatorMapping(search_operator_id=str(search_operator.id))
+            )
 
-    return _manage_periodic_table_index_get(request)
+    # load the form
+    associated_form = AssociatedPeriodicTableSearchOperatorForm()
+    assets = {"css": ["core_explore_periodic_table_app/admin/form.css"]}
+
+    context = {"associated_form": associated_form}
+
+    messages.add_message(request, messages.INFO, "Information saved with success.")
+
+    return admin_render(
+        request,
+        "core_explore_periodic_table_app/admin/periodic_table_type/manage_periodic_table_type.html",
+        context=context,
+        assets=assets,
+    )

@@ -10,7 +10,7 @@ Menu.add_item(
 ),
 
 periodic_table_children = (
-    MenuItem("Settings", reverse("admin:manage_periodic_table_index"), icon="gear"),
+    MenuItem("Settings", reverse("admin:manage_periodic_table_index"), icon="table"),
 )
 
 Menu.add_item(
