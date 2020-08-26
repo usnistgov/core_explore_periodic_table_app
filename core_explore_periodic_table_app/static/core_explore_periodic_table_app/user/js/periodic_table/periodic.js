@@ -106,12 +106,15 @@ let checkIfAllTemplateSelected = function(event) {
  * Clear current set of criteria
  */
 let clearPeriodicTableCriteria = function(){
+    let jqElementsField = $("#id_elements");
     // clear all selection elements
     chemical_element_selected = new Array();
     // remove the selected class for all selected element
     $.each($('.selected'), function(){
         $(this).removeClass('selected');
     });
+    // update the input value
+    jqElementsField.val(chemical_element_selected.join(","));
 };
 
 let initSortingAutoSubmit = function() {

@@ -6,7 +6,7 @@ from core_explore_periodic_table_app.components.persistent_query_periodic_table.
 
 
 def get_by_id(persistent_query_periodic_table_id):
-    """ Return the Persistent Query Periodic table with the given id
+    """Return the Persistent Query Periodic table with the given id
 
     Args:
         persistent_query_periodic_table_id:

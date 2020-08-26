@@ -11,7 +11,7 @@ from core_explore_periodic_table_app.components.search_operator_mapping import (
 
 
 def _initial_form():
-    """ Set the initial state of the form.
+    """Set the initial state of the form.
 
     Returns:
         List of fields select.
@@ -21,13 +21,13 @@ def _initial_form():
     result = []
 
     for mapping in search_operator_mapping:
-        result.append(mapping.search_operator_id)
+        result.append(str(mapping.search_operator.id))
 
     return result
 
 
 def _get_search_operators():
-    """ Get types versions.
+    """Get types versions.
 
     Returns:
         List of types versions.
@@ -46,8 +46,7 @@ def _get_search_operators():
 
 
 class AssociatedPeriodicTableSearchOperatorForm(forms.Form):
-    """ Associated Periodic Table Type form
-    """
+    """Associated Periodic Table Type form"""
 
     search_operator_list = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,

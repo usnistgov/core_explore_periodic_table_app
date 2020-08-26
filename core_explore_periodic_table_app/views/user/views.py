@@ -35,7 +35,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
     )
 
     def get(self, request, **kwargs):
-        """ GET
+        """GET
 
         Args:
             request:
@@ -58,7 +58,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         )
 
     def _get(self, request, query_id):
-        """ Prepare the GET context
+        """Prepare the GET context
 
         Args:
             query_id:
@@ -107,8 +107,10 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                 if periodic_table_data_form["order_by_field"] != 0:
                     default_order = periodic_table_data_form["order_by_field"]
             except Exception as e:
-                error = "An unexpected error occurred while loading the query: {}.".format(
-                    str(e)
+                error = (
+                    "An unexpected error occurred while loading the query: {}.".format(
+                        str(e)
+                    )
                 )
                 return {"error": error}
 
@@ -118,7 +120,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         )
 
     def post(self, request):
-        """ POST
+        """POST
 
         Args:
             request:
@@ -139,7 +141,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         )
 
     def _post(self, request):
-        """ Prepare the POST context
+        """Prepare the POST context
 
         Args:
             request:
@@ -183,8 +185,10 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                         # update query
                         query.templates = template_api.get_all_by_id_list(template_ids)
 
-                        element_search_operators = self._format_keyword_to_search_operators(
-                            elements.split(",")
+                        element_search_operators = (
+                            self._format_keyword_to_search_operators(
+                                elements.split(",")
+                            )
                         )
 
                         if not element_search_operators:
@@ -226,7 +230,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         )
 
     def _load_assets(self):
-        """ Return assets structure
+        """Return assets structure
 
         Returns:
 
@@ -258,7 +262,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
     def _format_keyword_search_context(
         self, search_form, error, warning, query_order=""
     ):
-        """ Format the context for the periodic table research page
+        """Format the context for the periodic table research page
 
         Args:
             search_form:
@@ -277,7 +281,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         return context
 
     def _format_keyword_to_search_operators(self, elements_list):
-        """ Format the elements list to a set of search operators
+        """Format the elements list to a set of search operators
 
         Args:
             elements_list: (ex. ["Au","U"...])
@@ -289,7 +293,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
         if all_so_mapping.count() > 0:
             for so_mapping in all_so_mapping:
-                so = search_operator_api.get_by_id(so_mapping.search_operator_id)
+                so = search_operator_api.get_by_id(str(so_mapping.search_operator.id))
                 for element in elements_list:
                     result.append(f"{so.name}:{element}")
         else:
@@ -299,7 +303,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
     @staticmethod
     def get_description():
-        """ Get the description page
+        """Get the description page
 
         Returns:
 
@@ -312,7 +316,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
     @staticmethod
     def get_title():
-        """ Get the title page
+        """Get the title page
 
         Returns:
 

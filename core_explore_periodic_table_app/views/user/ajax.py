@@ -8,8 +8,7 @@ from core_explore_periodic_table_app.components.persistent_query_periodic_table.
 
 
 class CreatePersistentQueryUrlPeriodicTableView(CreatePersistentQueryUrlView):
-    """ Create the persistent url from a Query
-    """
+    """Create the persistent url from a Query"""
 
     view_to_reverse = "core_explore_periodic_table_redirect"
 

@@ -24,8 +24,7 @@ class PeriodicTableForm(forms.Form):
     order_by_field = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
-        """ Init Periodic table form
-        """
+        """Init Periodic table form"""
         super(PeriodicTableForm, self).__init__(*args, **kwargs)
 
         # initialize template filters

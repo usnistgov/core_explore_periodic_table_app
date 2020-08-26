@@ -1,4 +1,5 @@
 core-composer-app==1.11.*
 core-explore-common-app==1.11.*
 core-explore-example-app==1.11.*
+core_explore_keyword_app==1.11.*
 core-main-app==1.11.*

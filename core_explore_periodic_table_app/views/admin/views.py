@@ -21,7 +21,7 @@ from core_main_app.utils.rendering import admin_render
 
 @staff_member_required
 def manage_periodic_table_index(request):
-    """ Index admin view
+    """Index admin view
 
     Args:
         request:
@@ -39,7 +39,7 @@ def manage_periodic_table_index(request):
 
 
 def _manage_periodic_table_index_get(request):
-    """ Index admin view GET
+    """Index admin view GET
 
     Args:
         request:
@@ -62,7 +62,7 @@ def _manage_periodic_table_index_get(request):
 
 
 def _manage_periodic_table_index_post(request):
-    """ Index admin view POST
+    """Index admin view POST
 
     Args:
         request:
@@ -80,7 +80,7 @@ def _manage_periodic_table_index_post(request):
             (
                 x
                 for x in search_operator_mapping
-                if x.search_operator_id == str(search_operator.id)
+                if x.search_operator.id == search_operator.id
             ),
             None,
         )
@@ -90,14 +90,16 @@ def _manage_periodic_table_index_post(request):
         )
         if find_in_mapping and not find_in_selected:
             # delete the mapping
-            current_search_operator_mapping = search_operator_mapping_api.get_by_search_operator_id(
-                search_operator.id
+            current_search_operator_mapping = (
+                search_operator_mapping_api.get_by_search_operator_id(
+                    search_operator.id
+                )
             )
             search_operator_mapping_api.delete(current_search_operator_mapping)
         elif not find_in_mapping and find_in_selected:
             # add the mapping
             search_operator_mapping_api.upsert(
-                SearchOperatorMapping(search_operator_id=str(search_operator.id))
+                SearchOperatorMapping(search_operator=search_operator)
             )
 
     # load the form

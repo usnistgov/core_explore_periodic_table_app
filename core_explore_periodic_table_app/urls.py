@@ -2,6 +2,7 @@
 """
 
 from django.conf.urls import re_path
+from django.conf.urls import include
 
 from core_explore_periodic_table_app.views.user import (
     views as user_views,
@@ -10,6 +11,7 @@ from core_explore_periodic_table_app.views.user import (
 
 
 urlpatterns = [
+    re_path(r"^rest/", include("core_explore_periodic_table_app.rest.urls")),
     re_path(
         r"^$",
         user_views.PeriodicTableBuildQueryView.as_view(),
