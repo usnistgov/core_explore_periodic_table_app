@@ -2,9 +2,11 @@
 """
 
 from typing import Dict, Any, List
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 
 import core_main_app.components.version_manager.api as version_manager_api
+import core_main_app.utils.decorators as decorators
 from core_explore_common_app.components.query import api as query_api
 from core_explore_common_app.utils.query.query import create_default_query
 from core_explore_common_app.views.user.views import (
@@ -17,6 +19,7 @@ from core_main_app.settings import DATA_SORTING_FIELDS
 from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
 from core_main_app.utils.rendering import render
 from core_main_app.components.template import api as template_api
+import core_explore_periodic_table_app.permissions.rights as rights
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
@@ -34,6 +37,13 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         "core_explore_periodic_table_app/user/periodic_table/periodic.html"
     )
 
+    @method_decorator(
+        decorators.permission_required(
+            content_type=rights.explore_periodic_table_content_type,
+            permission=rights.explore_periodic_table_access,
+            login_url=reverse_lazy("core_main_app_login"),
+        )
+    )
     def get(self, request, **kwargs):
         """GET
 
@@ -119,6 +129,13 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
             search_form, error, None, default_order
         )
 
+    @method_decorator(
+        decorators.permission_required(
+            content_type=rights.explore_periodic_table_content_type,
+            permission=rights.explore_periodic_table_access,
+            login_url=reverse_lazy("core_main_app_login"),
+        )
+    )
     def post(self, request):
         """POST
 
