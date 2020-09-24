@@ -115,6 +115,8 @@ let clearPeriodicTableCriteria = function(){
     });
     // update the input value
     jqElementsField.val(chemical_element_selected.join(","));
+    // refresh the result
+    submitForm();
 };
 
 let initSortingAutoSubmit = function() {

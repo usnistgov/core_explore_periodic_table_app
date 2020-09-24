@@ -202,14 +202,14 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                         # update query
                         query.templates = template_api.get_all_by_id_list(template_ids)
 
-                        element_search_operators = (
-                            self._format_keyword_to_search_operators(
-                                elements.split(",")
+                        try:
+                            element_search_operators = (
+                                self._format_keyword_to_search_operators(
+                                    elements.split(",")
+                                )
                             )
-                        )
-
-                        if not element_search_operators:
-                            warning = "No search operators has been configured, please contact an administrator."
+                        except Exception as ex:
+                            warning = str(ex)
                             element_search_operators = ""
 
                         query.content = self._build_query(element_search_operators)
@@ -303,7 +303,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         Args:
             elements_list: (ex. ["Au","U"...])
 
-        Returns: search operator list (ex.["so1:Au", "so2:Au", "so1:U", "so2:U"]) | None
+        Returns:
+            - Search operator list (ex.["so1:Au", "so2:Au", "so1:U", "so2:U"])
+            - Empty list if the query is empty
         """
         result = []
         all_so_mapping = search_operator_mapping_api.get_all()
@@ -314,7 +316,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                 for element in elements_list:
                     element and result.append(f"{so.name}:{element}")
         else:
-            result = None
+            raise Exception(
+                "No search operators has been configured, please contact an administrator."
+            )
 
         return result
 
