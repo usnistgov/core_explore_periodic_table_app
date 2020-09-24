@@ -312,7 +312,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
             for so_mapping in all_so_mapping:
                 so = search_operator_api.get_by_id(str(so_mapping.search_operator.id))
                 for element in elements_list:
-                    result.append(f"{so.name}:{element}")
+                    element and result.append(f"{so.name}:{element}")
         else:
             result = None
 
