@@ -83,7 +83,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
             # create query
             query = create_default_query(request, [])
             # upsert the query
-            query_api.upsert(query)
+            query_api.upsert(query, request.user)
             # create all data for select values in forms
             periodic_table_data_form = {
                 "query_id": str(query.id),
@@ -92,7 +92,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         else:  # query_id is not None
             try:
                 # get the query id
-                query = query_api.get_by_id(query_id)
+                query = query_api.get_by_id(query_id, request.user)
                 user_id = query.user_id
 
                 # get all elements back
@@ -195,7 +195,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                     error = "Expected parameters are not provided"
                 else:
                     # get query
-                    query = query_api.get_by_id(query_id)
+                    query = query_api.get_by_id(query_id, request.user)
                     if len(query.data_sources) == 0:
                         warning = "Please select at least 1 data source."
                     else:
@@ -227,7 +227,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                                     data_sources_index
                                 ]
 
-                        query_api.upsert(query)
+                        query_api.upsert(query, request.user)
             except DoesNotExist as does_not_exist_error:
                 error = (
                     str(does_not_exist_error)
