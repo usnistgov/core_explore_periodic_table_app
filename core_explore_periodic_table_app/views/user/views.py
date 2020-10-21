@@ -346,6 +346,18 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
 
 class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
+    @method_decorator(
+        decorators.permission_required(
+            content_type=rights.explore_periodic_table_content_type,
+            permission=rights.explore_periodic_table_access,
+            login_url=reverse_lazy("core_main_app_login"),
+        )
+    )
+    def get(self, request, *args, **kwargs):
+        return super(ResultQueryRedirectPeriodicSearchView, self).get(
+            self, request, *args, **kwargs
+        )
+
     @staticmethod
     def _get_persistent_query(persistent_query_id):
         return persistent_query_periodic_table_api.get_by_id(persistent_query_id)
