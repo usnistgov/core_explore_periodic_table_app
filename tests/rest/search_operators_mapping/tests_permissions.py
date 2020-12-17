@@ -9,7 +9,9 @@ from core_main_app.utils.integration_tests.integration_base_test_case import (
 )
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from tests.rest.fixtures.fixtures import SearchOperatorMappingFixtures
+from tests.rest.search_operators_mapping.fixtures.fixtures import (
+    SearchOperatorMappingFixtures,
+)
 
 fixture_search_operator_mapping = SearchOperatorMappingFixtures()
 

@@ -23,7 +23,7 @@ urlpatterns = [
         name="core_explore_periodic_table_index",
     ),
     re_path(
-        r"^results-redirect/(?P<persistent_query_id>\w+)",
+        r"^results-redirect",
         user_views.ResultQueryRedirectPeriodicSearchView.as_view(),
         name="core_explore_periodic_table_redirect",
     ),
