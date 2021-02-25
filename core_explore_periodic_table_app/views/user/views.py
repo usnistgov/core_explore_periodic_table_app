@@ -14,6 +14,9 @@ from core_explore_common_app.views.user.views import (
     ResultQueryRedirectView,
 )
 from core_explore_keyword_app.views.user.views import KeywordSearchView
+from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
+    PersistentQueryPeriodicTable,
+)
 from core_main_app.commons.exceptions import DoesNotExist
 from core_main_app.settings import DATA_SORTING_FIELDS
 from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
@@ -352,6 +355,10 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
 
 class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
+    model_name = PersistentQueryPeriodicTable.__name__
+    object_name = "persistent_query_periodic_table"
+    redirect_url = "core_explore_periodic_table_index"
+
     @method_decorator(
         decorators.permission_required(
             content_type=rights.explore_periodic_table_content_type,
@@ -375,9 +382,17 @@ class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
         )
 
     @staticmethod
+    def get_url_path():
+        return reverse(
+            ResultQueryRedirectPeriodicSearchView.redirect_url,
+            kwargs={"query_id": "query_id"},
+        ).split("query_id")[0]
+
+    @staticmethod
     def _get_reversed_url(query):
         return reverse(
-            "core_explore_periodic_table_index", kwargs={"query_id": query.id}
+            ResultQueryRedirectPeriodicSearchView.redirect_url,
+            kwargs={"query_id": query.id},
         )
 
     @staticmethod
