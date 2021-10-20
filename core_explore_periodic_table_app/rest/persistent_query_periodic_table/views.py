@@ -113,7 +113,7 @@ class AdminPersistentQueryPeriodicTableList(APIView):
 
 
 class PersistentQueryPeriodicTableList(APIView):
-    """List all persistent query periodic table or create one """
+    """List all persistent query periodic table or create one"""
 
     permission_classes = (IsAuthenticated,)
     serializer = PersistentQueryPeriodicTableSerializer
