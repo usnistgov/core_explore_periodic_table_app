@@ -2,36 +2,37 @@
 """
 
 from typing import Dict, Any, List
+
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 
-import core_main_app.components.version_manager.api as version_manager_api
+import core_explore_periodic_table_app.permissions.rights as rights
+import core_main_app.components.template_version_manager.api as template_version_manager_api
 import core_main_app.utils.decorators as decorators
 from core_explore_common_app.components.query import api as query_api
-from core_explore_common_app.utils.query.query import create_default_query
+from core_explore_common_app.components.query.api import create_default_query
 from core_explore_common_app.views.user.views import (
     ResultsView,
     ResultQueryRedirectView,
 )
-from core_explore_keyword_app.views.user.views import KeywordSearchView
-from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
-    PersistentQueryPeriodicTable,
-)
-from core_main_app.commons.exceptions import DoesNotExist
-from core_main_app.settings import DATA_SORTING_FIELDS
-from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
-from core_main_app.utils.rendering import render
-from core_main_app.components.template import api as template_api
-import core_explore_periodic_table_app.permissions.rights as rights
-from core_explore_periodic_table_app.components.search_operator_mapping import (
-    api as search_operator_mapping_api,
-)
 from core_explore_keyword_app.components.search_operator import (
     api as search_operator_api,
 )
+from core_explore_keyword_app.views.user.views import KeywordSearchView
 from core_explore_periodic_table_app.components.persistent_query_periodic_table import (
     api as persistent_query_periodic_table_api,
 )
+from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
+    PersistentQueryPeriodicTable,
+)
+from core_explore_periodic_table_app.components.search_operator_mapping import (
+    api as search_operator_mapping_api,
+)
+from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
+from core_main_app.commons.exceptions import DoesNotExist
+from core_main_app.components.template import api as template_api
+from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.rendering import render
 
 
 class PeriodicTableBuildQueryView(KeywordSearchView):
@@ -103,14 +104,8 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
                 # get all version managers
                 version_managers = []
-                for template in query.templates:
-                    version_managers.append(
-                        str(
-                            version_manager_api.get_from_version(
-                                template, request=request
-                            ).id
-                        )
-                    )
+                for template in query.templates.all():
+                    version_managers.append(str(template.version_manager.id))
                 # create all data for select values in forms
                 periodic_table_data_form = {
                     "query_id": str(query.id),
@@ -192,7 +187,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                 # get all template version manager ids
                 template_version_manager_ids = global_templates + user_templates
                 # from ids, get all version manager
-                version_manager_list = version_manager_api.get_by_id_list(
+                version_manager_list = template_version_manager_api.get_by_id_list(
                     template_version_manager_ids, request=request
                 )
                 # from all version manager, build a list of all version (template)
@@ -207,8 +202,10 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                         warning = "Please select at least 1 data source."
                     else:
                         # update query
-                        query.templates = template_api.get_all_accessible_by_id_list(
-                            template_ids, request=request
+                        query.templates.set(
+                            template_api.get_all_accessible_by_id_list(
+                                template_ids, request=request
+                            )
                         )
 
                         try:
@@ -230,11 +227,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                             if data_sources_index in range(
                                 0, len(order_by_field_array)
                             ):
-                                query.data_sources[
-                                    data_sources_index
-                                ].order_by_field = order_by_field_array[
-                                    data_sources_index
-                                ]
+                                query.data_sources[data_sources_index][
+                                    "order_by_field"
+                                ] = order_by_field_array[data_sources_index]
 
                         query_api.upsert(query, request.user)
             except DoesNotExist as does_not_exist_error:

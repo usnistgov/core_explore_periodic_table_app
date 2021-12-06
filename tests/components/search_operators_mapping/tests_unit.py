@@ -2,6 +2,7 @@
 """
 from unittest import TestCase, mock
 
+from core_explore_keyword_app.components.search_operator.models import SearchOperator
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
@@ -69,16 +70,15 @@ class TestsApiGetByName(TestCase):
 class TestsApiUpsert(TestCase):
     def setUp(self) -> None:
         self.mock_search_operator_mapping = SearchOperatorMapping(
-            search_operator="mock_id"
+            search_operator=SearchOperator(
+                name="mock_operator", xpath_list=["/x/path/a", "/x/path/b"]
+            )
         )
 
     @mock.patch.object(SearchOperatorMapping, "save")
     def test_returns_no_error(self, mock_save):
         mock_save.return_value = None
-
-        self.assertEqual(
-            search_operator_mapping_api.upsert(self.mock_search_operator_mapping), None
-        )
+        search_operator_mapping_api.upsert(self.mock_search_operator_mapping)
 
     @mock.patch.object(SearchOperatorMapping, "save")
     def test_duplicate_raises_api_error(self, mock_save):

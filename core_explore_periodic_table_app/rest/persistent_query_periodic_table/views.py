@@ -3,19 +3,18 @@
 
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from mongoengine import NotUniqueError
 
 import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
-
 from core_explore_periodic_table_app.rest.persistent_query_periodic_table.serializers import (
     PersistentQueryPeriodicTableSerializer,
     PersistentQueryPeriodicTableAdminSerializer,
 )
-from core_main_app.commons import exceptions
 from core_main_app.access_control.exceptions import AccessControlError
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from core_main_app.commons import exceptions
+from core_main_app.commons.exceptions import NotUniqueError
 
 
 class AdminPersistentQueryPeriodicTableList(APIView):

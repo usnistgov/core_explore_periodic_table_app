@@ -1,9 +1,14 @@
 """
 Url router for the administration site
 """
-from django.urls import re_path
 from django.contrib import admin
+from django.urls import re_path
+
+from core_explore_periodic_table_app.components.search_operator_mapping.models import (
+    SearchOperatorMapping,
+)
 from core_explore_periodic_table_app.views.admin import views as admin_views
+from core_main_app.admin import core_admin_site
 
 admin_urls = [
     re_path(
@@ -13,5 +18,6 @@ admin_urls = [
     ),
 ]
 
-urls = admin.site.get_urls()
-admin.site.get_urls = lambda: admin_urls + urls
+admin.site.register(SearchOperatorMapping)
+urls = core_admin_site.get_urls()
+core_admin_site.get_urls = lambda: admin_urls + urls

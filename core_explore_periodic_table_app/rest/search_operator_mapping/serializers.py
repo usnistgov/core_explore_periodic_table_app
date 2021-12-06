@@ -1,21 +1,16 @@
 """Serializers used throughout the Search operator mapping Rest API
 """
-from rest_framework.exceptions import ValidationError
-from rest_framework_mongoengine.serializers import DocumentSerializer
+from rest_framework.serializers import ModelSerializer
 
-from core_explore_keyword_app.components.search_operator import (
-    api as search_operator_api,
-)
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
 from core_explore_periodic_table_app.components.search_operator_mapping.models import (
     SearchOperatorMapping,
 )
-from core_main_app.commons.exceptions import DoesNotExist
 
 
-class SearchOperatorMappingSerializer(DocumentSerializer):
+class SearchOperatorMappingSerializer(ModelSerializer):
     """SearchOperatorMapping serializer"""
 
     class Meta(object):

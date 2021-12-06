@@ -2,10 +2,14 @@
 """
 from unittest.mock import patch
 
+from django.contrib.auth.models import AnonymousUser
 from django.test import SimpleTestCase
 from rest_framework import status
 
 import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
+from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
+    PersistentQueryPeriodicTable,
+)
 from core_explore_periodic_table_app.rest.persistent_query_periodic_table import (
     views as persistent_query_periodic_table_views,
 )
@@ -13,12 +17,8 @@ from core_explore_periodic_table_app.rest.persistent_query_periodic_table.serial
     PersistentQueryPeriodicTableSerializer,
     PersistentQueryPeriodicTableAdminSerializer,
 )
-from django.contrib.auth.models import AnonymousUser
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
-from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
-    PersistentQueryPeriodicTable,
-)
 
 
 class TestAdminPersistentQueryPeriodicTableListGet(SimpleTestCase):
@@ -62,7 +62,7 @@ class TestPersistentQueryPeriodicTableListGet(SimpleTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    @patch.object(PersistentQueryPeriodicTable, "get_all")
+    @patch.object(PersistentQueryPeriodicTable, "get_all_by_user")
     def test_authenticated_returns_http_200(self, get_all):
         get_all.return_value = {}
         mock_user = create_mock_user("1")
@@ -74,7 +74,7 @@ class TestPersistentQueryPeriodicTableListGet(SimpleTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    @patch.object(PersistentQueryPeriodicTable, "get_all")
+    @patch.object(PersistentQueryPeriodicTable, "get_all_by_user")
     def test_superuser_returns_http_200(self, get_all):
         get_all.return_value = {}
         mock_user = create_mock_user("1", is_staff=True, is_superuser=True)

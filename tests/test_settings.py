@@ -1,15 +1,26 @@
-from core_main_app.utils.databases.mongoengine_database import Database
-
 SECRET_KEY = "fake-key"
 
 INSTALLED_APPS = [
     # Django apps
+    # Django apps
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
     # Local apps
     "tests",
+    "core_main_app",
+    "core_explore_common_app",
+    "core_explore_keyword_app",
+    "core_explore_periodic_table_app",
 ]
+
+CUSTOM_NAME = "Local"
+""" :py:class:`str`: Name of the local instance
+"""
 
 # IN-MEMORY TEST DATABASE
 DATABASES = {
@@ -23,9 +34,30 @@ DATABASES = {
     },
 }
 
+MIDDLEWARE = (
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "tz_detect.middleware.TimezoneMiddleware",
+)
 
-MOCK_DATABASE_NAME = "db_mock"
-MOCK_DATABASE_HOST = "mongomock://localhost"
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "core_main_app.utils.custom_context_processors.domain_context_processor",  # Needed by any curator app
+                "django.template.context_processors.i18n",
+            ],
+        },
+    },
+]
 
-database = Database(MOCK_DATABASE_HOST, MOCK_DATABASE_NAME)
-database.connect()
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

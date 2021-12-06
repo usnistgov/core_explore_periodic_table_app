@@ -2,22 +2,21 @@
 """
 
 
-from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
-    PersistentQueryPeriodicTableFixtures,
-)
 from django.contrib.auth.models import AnonymousUser
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
-)
 
 import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
+from core_explore_common_app.settings import CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
 )
 from core_main_app.access_control.exceptions import AccessControlError
-
-from core_explore_common_app.settings import CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT
+from core_main_app.utils.integration_tests.integration_base_test_case import (
+    MongoIntegrationBaseTestCase,
+)
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
+    PersistentQueryPeriodicTableFixtures,
+)
 
 fixture_persistent_query_periodic_table = PersistentQueryPeriodicTableFixtures()
 

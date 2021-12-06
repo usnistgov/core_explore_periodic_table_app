@@ -1,6 +1,7 @@
 """ Persistent Query Periodic table model
 """
-from mongoengine import errors as mongoengine_errors
+
+from django.core.exceptions import ObjectDoesNotExist
 
 from core_explore_common_app.components.abstract_persistent_query.models import (
     AbstractPersistentQuery,
@@ -22,8 +23,8 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
 
         """
         try:
-            return PersistentQueryPeriodicTable.objects().get(pk=query_id)
-        except mongoengine_errors.DoesNotExist as e:
+            return PersistentQueryPeriodicTable.objects.get(pk=query_id)
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as e:
             raise exceptions.ModelError(str(e))
@@ -39,8 +40,8 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
 
         """
         try:
-            return PersistentQueryPeriodicTable.objects().get(name=query_name)
-        except mongoengine_errors.DoesNotExist as e:
+            return PersistentQueryPeriodicTable.objects.get(name=query_name)
+        except ObjectDoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as e:
             raise exceptions.ModelError(str(e))
@@ -65,7 +66,7 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         Returns:
 
         """
-        return PersistentQueryPeriodicTable.objects(user_id=str(user_id))
+        return PersistentQueryPeriodicTable.objects.filter(user_id=str(user_id)).all()
 
     @staticmethod
     def get_none():
@@ -74,4 +75,4 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         Returns:
 
         """
-        return PersistentQueryPeriodicTable.objects().none()
+        return PersistentQueryPeriodicTable.objects.none()

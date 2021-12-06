@@ -7,8 +7,8 @@ from core_explore_periodic_table_app.rest.search_operator_mapping import (
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
-from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from tests.rest.search_operators_mapping.fixtures.fixtures import (
     SearchOperatorMappingFixtures,
 )
@@ -78,7 +78,7 @@ class TestSearchOperatorMapping(MongoIntegrationBaseTestCase):
 
         # Assert
         self.assertEqual(
-            response.data["search_operator"], str(self.fixture.search_operator_1.id)
+            response.data["search_operator"], self.fixture.search_operator_1.id
         )
 
     def test_add_wrong_search_operator_mapping(self):
@@ -89,7 +89,7 @@ class TestSearchOperatorMapping(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_post(
             search_operator_mapping_views.SearchOperatorsMapping.as_view(),
             user,
-            data={"search_operator": "123456789012345678901234"},
+            data={"search_operator": -1},
         )
 
         # Assert
@@ -109,7 +109,7 @@ class TestSearchOperatorMapping(MongoIntegrationBaseTestCase):
 
         # Assert
         self.assertEqual(
-            response.data["search_operator"], str(self.fixture.search_operator_3.id)
+            response.data["search_operator"], self.fixture.search_operator_3.id
         )
 
     def test_delete_search_operator_mapping(self):
