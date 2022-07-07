@@ -32,7 +32,7 @@ chdir(normpath(join(abspath(__file__), pardir)))
 
 setup(
     name="core_explore_periodic_table_app",
-    version="1.8.0",
+    version="1.9.0",
     description="Core explore periodic table capabilities for the curator core project",
     long_description=long_desc,
     author="NIST IT Lab",
