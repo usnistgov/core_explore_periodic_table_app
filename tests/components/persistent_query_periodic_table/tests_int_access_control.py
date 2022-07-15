@@ -3,8 +3,13 @@
 
 
 from django.contrib.auth.models import AnonymousUser
+from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
+    PersistentQueryPeriodicTableFixtures,
+)
 
-import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
+from core_explore_periodic_table_app.components.persistent_query_periodic_table import (
+    api as persistent_query_periodic_table_api,
+)
 from core_explore_common_app.settings import CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
@@ -14,9 +19,6 @@ from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
-    PersistentQueryPeriodicTableFixtures,
-)
 
 fixture_persistent_query_periodic_table = PersistentQueryPeriodicTableFixtures()
 
@@ -413,37 +415,5 @@ class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase)
 
     def test_get_all_as_anonymous_user_raises_error(self):
         # Assert
-        with self.assertRaises(AccessControlError):
-            persistent_query_periodic_table_api.get_all_by_user(AnonymousUser())
-
-
-class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase):
-    fixture = fixture_persistent_query_periodic_table
-
-    def test_get_all_by_user_as_superuser_returns_all_user_persistent_query_periodic_table(
-        self,
-    ):
-        # Arrange
-        mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
-
-        # Act
-        result = persistent_query_periodic_table_api.get_all_by_user(mock_user)
-
-        # Assert
-        self.assertTrue(len(result), 1)
-
-    def test_get_all_by_user_returns_all_user_persistent_query_periodic_table(self):
-        # Arrange
-        mock_user = create_mock_user("1")
-
-        # Act
-        result = persistent_query_periodic_table_api.get_all_by_user(mock_user)
-
-        # Assert
-        self.assertTrue(len(result), 1)
-
-    def test_get_all_as_anonymous_user(self):
-
-        # Act
         with self.assertRaises(AccessControlError):
             persistent_query_periodic_table_api.get_all_by_user(AnonymousUser())
