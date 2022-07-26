@@ -90,6 +90,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 "abstract": False,
+                "verbose_name": "Persistent Query by Periodic Table",
+                "verbose_name_plural": "Persistent Queries by Periodic Table",
             },
         ),
     ]

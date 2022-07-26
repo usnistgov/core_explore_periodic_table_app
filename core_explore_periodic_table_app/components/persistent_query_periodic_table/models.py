@@ -12,6 +12,10 @@ from core_main_app.commons import exceptions
 class PersistentQueryPeriodicTable(AbstractPersistentQuery):
     """Persistent Query Periodic Table"""
 
+    class Meta:
+        verbose_name = "Persistent Query by Periodic Table"
+        verbose_name_plural = "Persistent Queries by Periodic Table"
+
     @staticmethod
     def get_by_id(query_id):
         """Get a persistent query periodic table

@@ -11,7 +11,7 @@ class CoreExplorePeriodicTableAppConfig(AppConfig):
     """Periodic Table configuration"""
 
     name = "core_explore_periodic_table_app"
-    verbose_name = "Core Periodic table App Config"
+    verbose_name = "Core Explore by Periodic Table App"
 
     def ready(self):
         """Run when the app is ready.
