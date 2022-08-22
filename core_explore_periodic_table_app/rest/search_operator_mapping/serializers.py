@@ -13,7 +13,7 @@ from core_explore_periodic_table_app.components.search_operator_mapping.models i
 class SearchOperatorMappingSerializer(ModelSerializer):
     """SearchOperatorMapping serializer"""
 
-    class Meta(object):
+    class Meta:
         """Meta"""
 
         model = SearchOperatorMapping

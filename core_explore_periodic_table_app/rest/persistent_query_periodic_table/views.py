@@ -7,14 +7,13 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core_main_app.access_control.exceptions import AccessControlError
+from core_main_app.commons import exceptions
 import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
 from core_explore_periodic_table_app.rest.persistent_query_periodic_table.serializers import (
     PersistentQueryPeriodicTableSerializer,
     PersistentQueryPeriodicTableAdminSerializer,
 )
-from core_main_app.access_control.exceptions import AccessControlError
-from core_main_app.commons import exceptions
-from core_main_app.commons.exceptions import NotUniqueError
 
 
 class AdminPersistentQueryPeriodicTableList(APIView):
@@ -51,8 +50,8 @@ class AdminPersistentQueryPeriodicTableList(APIView):
 
             # Return response
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
@@ -103,8 +102,8 @@ class AdminPersistentQueryPeriodicTableList(APIView):
         except ValidationError as validation_exception:
             content = {"message": validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
@@ -145,8 +144,8 @@ class PersistentQueryPeriodicTableList(APIView):
 
             # Return response
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
@@ -238,8 +237,8 @@ class PersistentQueryPeriodicTableDetail(APIView):
         except exceptions.DoesNotExist:
             content = {"message": "Object not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
@@ -293,11 +292,11 @@ class PersistentQueryPeriodicTableDetail(APIView):
         except ValidationError as validation_exception:
             content = {"message": validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
-        except NotUniqueError as e:
-            content = {"message": str(e)}
+        except exceptions.NotUniqueError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except exceptions.DoesNotExist:
             content = {"message": "Persistent query periodic table not found."}
@@ -336,8 +335,8 @@ class PersistentQueryPeriodicTableDetail(APIView):
 
             # Return response
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except exceptions.DoesNotExist:
             content = {"message": "Persistent query periodic table not found."}
@@ -385,8 +384,8 @@ class PersistentQueryPeriodicTableByName(APIView):
         except exceptions.DoesNotExist:
             content = {"message": "Persistent query periodic table not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
-        except AccessControlError as e:
-            content = {"message": str(e)}
+        except AccessControlError as exception:
+            content = {"message": str(exception)}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}

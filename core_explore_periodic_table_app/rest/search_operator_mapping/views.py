@@ -7,13 +7,13 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core_main_app.commons import exceptions
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
 from core_explore_periodic_table_app.rest.search_operator_mapping.serializers import (
     SearchOperatorMappingSerializer,
 )
-from core_main_app.commons import exceptions
 
 
 class SearchOperatorsMapping(APIView):

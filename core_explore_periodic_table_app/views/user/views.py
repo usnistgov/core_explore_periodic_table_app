@@ -6,15 +6,18 @@ from typing import Dict, Any, List
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 
-import core_explore_periodic_table_app.permissions.rights as rights
 import core_main_app.components.template_version_manager.api as template_version_manager_api
 import core_main_app.utils.decorators as decorators
+from core_main_app.commons.exceptions import DoesNotExist
+from core_main_app.components.template import api as template_api
+from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.rendering import render
 from core_explore_common_app.components.query import api as query_api
-from core_explore_common_app.components.query.api import create_default_query
 from core_explore_common_app.views.user.views import (
     ResultsView,
     ResultQueryRedirectView,
 )
+
 from core_explore_keyword_app.components.search_operator import (
     api as search_operator_api,
 )
@@ -29,13 +32,12 @@ from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
 from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
-from core_main_app.commons.exceptions import DoesNotExist
-from core_main_app.components.template import api as template_api
-from core_main_app.settings import DATA_SORTING_FIELDS
-from core_main_app.utils.rendering import render
+from core_explore_periodic_table_app.permissions import rights
 
 
 class PeriodicTableBuildQueryView(KeywordSearchView):
+    """Periodic Table Build Query View"""
+
     results_url = "core_explore_periodic_table_results"
     query_builder_interface = (
         "core_explore_periodic_table_app/user/periodic_table/periodic.html"
@@ -43,8 +45,8 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
     @method_decorator(
         decorators.permission_required(
-            content_type=rights.explore_periodic_table_content_type,
-            permission=rights.explore_periodic_table_access,
+            content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
+            permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
             login_url=reverse_lazy("core_main_app_login"),
         )
     )
@@ -85,7 +87,7 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         default_order = ",".join(DATA_SORTING_FIELDS)
         if query_id is None:
             # create query
-            query = create_default_query(request, [])
+            query = query_api.create_default_query(request, [])
             # upsert the query
             query_api.upsert(query, request.user)
             # create all data for select values in forms
@@ -118,10 +120,10 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                 # set the correct ordering for the context
                 if periodic_table_data_form["order_by_field"] != 0:
                     default_order = periodic_table_data_form["order_by_field"]
-            except Exception as e:
+            except Exception as exception:
                 error = (
                     "An unexpected error occurred while loading the query: {}.".format(
-                        str(e)
+                        str(exception)
                     )
                 )
                 return {"error": error}
@@ -133,8 +135,8 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
     @method_decorator(
         decorators.permission_required(
-            content_type=rights.explore_periodic_table_content_type,
-            permission=rights.explore_periodic_table_access,
+            content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
+            permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
             login_url=reverse_lazy("core_main_app_login"),
         )
     )
@@ -238,8 +240,8 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                     if does_not_exist_error
                     else "An unexpected error occurred while retrieving the query."
                 )
-            except Exception as e:
-                error = "An unexpected error occurred: {}.".format(str(e))
+            except Exception as exception:
+                error = "An unexpected error occurred: {}.".format(str(exception))
         else:
             error = "An unexpected error occurred: the form is not valid."
 
@@ -316,9 +318,11 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
         if all_so_mapping.count() > 0:
             for so_mapping in all_so_mapping:
-                so = search_operator_api.get_by_id(str(so_mapping.search_operator.id))
+                search_operator = search_operator_api.get_by_id(
+                    str(so_mapping.search_operator.id)
+                )
                 for element in elements_list:
-                    element and result.append(f"{so.name}:{element}")
+                    element and result.append(f"{search_operator.name}:{element}")
         else:
             raise Exception(
                 "No search operators has been configured, please contact an administrator."
@@ -336,7 +340,8 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         return (
             "Click on an element of the Periodic Table to add it to your query. "
             "You can save queries and you will retrieve them on your next connection. "
-            "When your query is done, please click on Submit Query to get XML documents that match the criteria."
+            "When your query is done, please click on Submit Query to get XML documents"
+            " that match the criteria."
         )
 
     @staticmethod
@@ -350,21 +355,21 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
 
 class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
+    """Result Query Redirect Periodic Search View"""
+
     model_name = PersistentQueryPeriodicTable.__name__
     object_name = "persistent_query_periodic_table"
     redirect_url = "core_explore_periodic_table_index"
 
     @method_decorator(
         decorators.permission_required(
-            content_type=rights.explore_periodic_table_content_type,
-            permission=rights.explore_periodic_table_access,
+            content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
+            permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
             login_url=reverse_lazy("core_main_app_login"),
         )
     )
     def get(self, request, *args, **kwargs):
-        return super(ResultQueryRedirectPeriodicSearchView, self).get(
-            self, request, *args, **kwargs
-        )
+        return super().get(self, request, *args, **kwargs)
 
     @staticmethod
     def _get_persistent_query_by_id(persistent_query_id, user):

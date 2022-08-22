@@ -37,8 +37,8 @@ def _get_search_operators():
     try:
         # display all global types
         all_search_operator_list = search_operator_api.get_all()
-        for so in all_search_operator_list:
-            type_list.append((so.id, so.name))
+        for search_operator in all_search_operator_list:
+            type_list.append((search_operator.id, search_operator.name))
     except Exception:
         pass
 
@@ -56,6 +56,6 @@ class AssociatedPeriodicTableSearchOperatorForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        super(AssociatedPeriodicTableSearchOperatorForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["search_operator_list"].initial = _initial_form()
         self.fields["search_operator_list"].choices = _get_search_operators()

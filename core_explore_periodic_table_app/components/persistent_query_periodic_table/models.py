@@ -13,6 +13,8 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
     """Persistent Query Periodic Table"""
 
     class Meta:
+        """Meta"""
+
         verbose_name = "Persistent Query by Periodic Table"
         verbose_name_plural = "Persistent Queries by Periodic Table"
 
@@ -28,10 +30,10 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         """
         try:
             return PersistentQueryPeriodicTable.objects.get(pk=query_id)
-        except ObjectDoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
-        except Exception as e:
-            raise exceptions.ModelError(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
+        except Exception as exception:
+            raise exceptions.ModelError(str(exception))
 
     @staticmethod
     def get_by_name(query_name):
@@ -45,10 +47,10 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         """
         try:
             return PersistentQueryPeriodicTable.objects.get(name=query_name)
-        except ObjectDoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
-        except Exception as e:
-            raise exceptions.ModelError(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
+        except Exception as exception:
+            raise exceptions.ModelError(str(exception))
 
     @staticmethod
     def get_all():

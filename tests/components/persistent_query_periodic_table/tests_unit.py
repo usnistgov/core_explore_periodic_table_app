@@ -4,22 +4,25 @@ from unittest import TestCase, mock
 
 from mock import patch
 
+from core_main_app.access_control.exceptions import AccessControlError
+from core_main_app.commons import exceptions
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_explore_periodic_table_app.components.persistent_query_periodic_table import (
     api as persistent_query_periodic_table_api,
 )
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
 )
-from core_main_app.access_control.exceptions import AccessControlError
-from core_main_app.commons import exceptions
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
 
 
 class TestPersistentQueryPeriodicTableGetById(TestCase):
+    """Test Persistent Query Periodic Table Get By Id"""
+
     @patch.object(PersistentQueryPeriodicTable, "get_by_id")
     def test_persistent_query_periodic_table_get_by_id_return_data_if_found(
         self, mock_get_by_id
     ):
+        """test_persistent_query_periodic_table_get_by_id_return_data_if_found"""
 
         # Arrange
         expected_result = PersistentQueryPeriodicTable(user_id="1")
@@ -35,6 +38,7 @@ class TestPersistentQueryPeriodicTableGetById(TestCase):
     def test_persistent_query_periodic_table_get_by_id_raises_model_error_if_not_found(
         self,
     ):
+        """test_persistent_query_periodic_table_get_by_id_raises_model_error_if_not_found"""
 
         # Arrange
         mock_user = create_mock_user("1")
@@ -47,6 +51,7 @@ class TestPersistentQueryPeriodicTableGetById(TestCase):
     def test_persistent_query_periodic_table_get_by_id_raises_does_not_exist_error_if_not_found(
         self, mock_get_by_id
     ):
+        """test_persistent_query_periodic_table_get_by_id_raises_does_not_exist_error_if_not_found"""
 
         # Arrange
         mock_get_by_id.side_effect = exceptions.DoesNotExist(message="mock error")
@@ -58,10 +63,14 @@ class TestPersistentQueryPeriodicTableGetById(TestCase):
 
 
 class TestsPersistentQueryPeriodicTableGetByName(TestCase):
+    """Tests Persistent Query Periodic Table Get By Name"""
+
     @mock.patch.object(PersistentQueryPeriodicTable, "get_by_name")
     def test_persistent_query_periodic_table_get_by_name_return_data_if_found(
         self, mock_get_by_name
     ):
+        """test_persistent_query_periodic_table_get_by_name_return_data_if_found"""
+
         # Arrange
         expected_result = PersistentQueryPeriodicTable(user_id="1")
         mock_get_by_name.return_value = expected_result
@@ -74,9 +83,10 @@ class TestsPersistentQueryPeriodicTableGetByName(TestCase):
         )
 
     @patch.object(PersistentQueryPeriodicTable, "get_by_name")
-    def test_persistent_query_periodic_table_get_by_name_raises_does_not_exist_error_if_not_found(
+    def test_persistent_query_periodic_table_get_by_name_raises_error_if_not_found(
         self, mock_get_by_name
     ):
+        """test_persistent_query_periodic_table_get_by_name_raises_error_if_not_found"""
 
         # Arrange
         mock_get_by_name.side_effect = exceptions.DoesNotExist(message="mock error")
@@ -88,6 +98,8 @@ class TestsPersistentQueryPeriodicTableGetByName(TestCase):
 
 
 class TestsPersistentQueryPeriodicTableUpsert(TestCase):
+    """Test Persistent Query Periodic Table Upsert"""
+
     def setUp(self) -> None:
         self.mock_persistent_query_periodic_table = PersistentQueryPeriodicTable(
             user_id="1",
@@ -98,6 +110,7 @@ class TestsPersistentQueryPeriodicTableUpsert(TestCase):
 
     @patch.object(PersistentQueryPeriodicTable, "save")
     def test_persistent_query_periodic_table_upsert_return_data(self, mock_save):
+        """test_persistent_query_periodic_table_upsert_return_data"""
 
         # Arrange
         mock_save.return_value = self.mock_persistent_query_periodic_table
@@ -113,8 +126,11 @@ class TestsPersistentQueryPeriodicTableUpsert(TestCase):
 
 
 class TestsPersistentQueryPeriodicTableDelete(TestCase):
+    """Test Persistent Query Periodic Table Delete"""
+
     @patch.object(PersistentQueryPeriodicTable, "delete")
     def test_returns_no_error(self, mock_delete):
+        """test_returns_no_error"""
 
         # Arrange
         mock_delete.return_value = None
@@ -127,8 +143,11 @@ class TestsPersistentQueryPeriodicTableDelete(TestCase):
 
 
 class TestsPersistentQueryPeriodicTableGetAll(TestCase):
+    """Test Persistent Query Periodic Table Get All"""
+
     @patch.object(PersistentQueryPeriodicTable, "get_all")
     def test_returns_no_error(self, mock_get_all):
+        """test_returns_no_error"""
 
         # Arrange
         expected_result = {
@@ -145,9 +164,10 @@ class TestsPersistentQueryPeriodicTableGetAll(TestCase):
         )
 
     @patch.object(PersistentQueryPeriodicTable, "get_all")
-    def test_persistent_query_periodic_table_get_all_raises_does_not_access_control_error_if_not_admin(
+    def test_persistent_query_periodic_table_get_all_raises_error_if_not_admin(
         self, mock_get_all
     ):
+        """test_persistent_query_periodic_table_get_all_raises_error_if_not_admin"""
 
         # Arrange
         mock_get_all.side_effect = AccessControlError
@@ -159,8 +179,11 @@ class TestsPersistentQueryPeriodicTableGetAll(TestCase):
 
 
 class TestsPersistentQueryPeriodicTableGetAllByUser(TestCase):
+    """Test Persistent Query Periodic Table Get All By User"""
+
     @patch.object(PersistentQueryPeriodicTable, "get_all_by_user")
     def test_returns_no_error(self, mock_get_all_by_user):
+        """test_returns_no_error"""
 
         # Arrange
         expected_result = {

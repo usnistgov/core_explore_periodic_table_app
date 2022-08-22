@@ -1,5 +1,7 @@
 """ Fixtures files for Data
 """
+
+from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
 from core_explore_keyword_app.components.search_operator.models import SearchOperator
 from core_explore_periodic_table_app.components.search_operator_mapping.models import (
     SearchOperatorMapping,
@@ -7,7 +9,6 @@ from core_explore_periodic_table_app.components.search_operator_mapping.models i
 from core_explore_periodic_table_app.rest.search_operator_mapping.serializers import (
     SearchOperatorMappingSerializer,
 )
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
 
 
 class SearchOperatorMappingFixtures(FixtureInterface):

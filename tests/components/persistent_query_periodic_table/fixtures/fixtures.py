@@ -1,9 +1,11 @@
 """ Fixtures files for Persistent Query Periodic Table
 """
+
+from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
+
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
 )
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
 
 
 class PersistentQueryPeriodicTableFixtures(FixtureInterface):

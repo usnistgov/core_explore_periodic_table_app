@@ -13,7 +13,9 @@ from core_explore_periodic_table_app.components.persistent_query_periodic_table.
 class PersistentQueryPeriodicTableSerializer(ModelSerializer):
     """Persistent query periodic_table"""
 
-    class Meta(object):
+    class Meta:
+        """Meta"""
+
         model = PersistentQueryPeriodicTable
         fields = ["id", "user_id", "content", "templates", "name"]
         read_only_fields = ("id", "user_id")
@@ -58,7 +60,7 @@ class PersistentQueryPeriodicTableSerializer(ModelSerializer):
 class PersistentQueryPeriodicTableAdminSerializer(ModelSerializer):
     """PersistentQueryAdminPeriodicTable Serializer"""
 
-    class Meta(object):
+    class Meta:
         """Meta"""
 
         model = PersistentQueryPeriodicTable
