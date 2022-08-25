@@ -22,7 +22,7 @@ def init_permissions(apps):
 
         # Get or Create the default group
         default_group, created = group.objects.get_or_create(
-            name=main_rights.default_group
+            name=main_rights.DEFAULT_GROUP
         )
 
         # Get explore periodic table permissions
