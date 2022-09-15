@@ -22,17 +22,17 @@ def init_permissions(apps):
 
         # Get or Create the default group
         default_group, created = group.objects.get_or_create(
-            name=main_rights.default_group
+            name=main_rights.DEFAULT_GROUP
         )
 
         # Get explore periodic table permissions
         explore_access_perm = permission.objects.get(
-            codename=explore_periodic_table_rights.explore_periodic_table_access
+            codename=explore_periodic_table_rights.EXPLORE_PERIODIC_TABLE_ACCESS
         )
 
         # Add permissions to default group
         default_group.permissions.add(explore_access_perm)
-    except Exception as e:
+    except Exception as exception:
         logger.error(
-            "Impossible to init explore_periodic_table permissions: %s" % str(e)
+            "Impossible to init explore_periodic_table permissions: %s", str(exception)
         )

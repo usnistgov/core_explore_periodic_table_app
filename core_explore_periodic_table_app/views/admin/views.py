@@ -32,10 +32,10 @@ def manage_periodic_table_index(request):
     try:
         if request.method == "POST":
             return _manage_periodic_table_index_post(request)
-        else:
-            return _manage_periodic_table_index_get(request)
-    except Exception as e:
-        return HttpResponseBadRequest(str(e))
+
+        return _manage_periodic_table_index_get(request)
+    except Exception as exception:
+        return HttpResponseBadRequest(str(exception))
 
 
 def _manage_periodic_table_index_get(request):

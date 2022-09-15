@@ -3,11 +3,11 @@
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from core_explore_periodic_table_app.rest.search_operator_mapping import (
-    views as search_operators_mapping_views,
-)
 from core_explore_periodic_table_app.rest.persistent_query_periodic_table import (
     views as persistent_query_periodic_table_views,
+)
+from core_explore_periodic_table_app.rest.search_operator_mapping import (
+    views as search_operators_mapping_views,
 )
 
 urlpatterns = [

@@ -18,6 +18,5 @@ class CreatePersistentQueryUrlPeriodicTableView(CreatePersistentQueryUrlView):
         return PersistentQueryPeriodicTable(
             user_id=query.user_id,
             content=query.content,
-            templates=query.templates,
             data_sources=query.data_sources,
         )

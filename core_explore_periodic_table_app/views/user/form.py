@@ -26,7 +26,7 @@ class PeriodicTableForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Init Periodic table form"""
         request = kwargs.pop("request")
-        super(PeriodicTableForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # initialize template filters
         global_templates = [

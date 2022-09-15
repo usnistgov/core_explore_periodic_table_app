@@ -1,18 +1,16 @@
 """ Periodic Table Model
 """
-from django_mongoengine import fields, Document
-from mongoengine import CASCADE
+
+from django.db import models
 
 from core_explore_keyword_app.components.search_operator.models import SearchOperator
 
 
-class SearchOperatorMapping(Document):
+class SearchOperatorMapping(models.Model):
     """Periodic Table Type configuration object"""
 
-    search_operator = fields.ReferenceField(
-        SearchOperator,
-        reverse_delete_rule=CASCADE,
-        blank=False,
+    search_operator = models.ForeignKey(
+        SearchOperator, on_delete=models.CASCADE, blank=False
     )
 
     @staticmethod
@@ -24,7 +22,7 @@ class SearchOperatorMapping(Document):
         Returns:
 
         """
-        return SearchOperatorMapping.objects().all()
+        return SearchOperatorMapping.objects.all()
 
     @staticmethod
     def get_by_id(pk):

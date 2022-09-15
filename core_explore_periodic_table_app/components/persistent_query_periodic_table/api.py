@@ -1,15 +1,15 @@
 """ Persistent Query Periodic table API
 """
 
-from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
-    PersistentQueryPeriodicTable,
-)
-from core_main_app.access_control.decorators import access_control
 from core_explore_common_app.access_control.api import (
     can_read_persistent_query,
     can_write_persistent_query,
 )
+from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
+    PersistentQueryPeriodicTable,
+)
 from core_main_app.access_control.api import has_perm_administration
+from core_main_app.access_control.decorators import access_control
 
 
 @access_control(can_write_persistent_query)
@@ -23,7 +23,8 @@ def upsert(persistent_query_periodic_table, user):
     Returns:
 
     """
-    return persistent_query_periodic_table.save()
+    persistent_query_periodic_table.save()
+    return persistent_query_periodic_table
 
 
 @access_control(can_read_persistent_query)

@@ -48,7 +48,8 @@ def upsert(search_operator_mapping):
     Returns:
 
     """
-    return search_operator_mapping.save()
+    search_operator_mapping.save()
+    return search_operator_mapping
 
 
 def delete(search_operator_mapping):

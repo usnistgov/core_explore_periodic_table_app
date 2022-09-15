@@ -1,31 +1,35 @@
 """ Unit Test Persistent Query Periodic Table
 """
 
-
-from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
-    PersistentQueryPeriodicTableFixtures,
-)
 from django.contrib.auth.models import AnonymousUser
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
+
+from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 
-import core_explore_periodic_table_app.components.persistent_query_periodic_table.api as persistent_query_periodic_table_api
+from core_explore_common_app.settings import CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT
+from core_explore_periodic_table_app.components.persistent_query_periodic_table import (
+    api as persistent_query_periodic_table_api,
+)
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
 )
-from core_main_app.access_control.exceptions import AccessControlError
-
-from core_explore_common_app.settings import CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT
+from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
+    PersistentQueryPeriodicTableFixtures,
+)
 
 fixture_persistent_query_periodic_table = PersistentQueryPeriodicTableFixtures()
 
 
 class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Get By Id"""
+
     fixture = fixture_persistent_query_periodic_table
 
     def test_get_by_id_as_superuser_returns_persistent_query_periodic_table(self):
+        """test_get_by_id_as_superuser_returns_persistent_query_periodic_table"""
 
         # Arrange
         persistent_query_periodic_table_id = (
@@ -44,6 +48,7 @@ class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
         )
 
     def test_get_by_id_as_owner_returns_persistent_query_periodic_table(self):
+        """test_get_by_id_as_owner_returns_persistent_query_periodic_table"""
 
         # Arrange
         persistent_query_periodic_table_id = (
@@ -62,6 +67,8 @@ class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
         )
 
     def test_get_by_id_as_anonymous_user(self):
+        """test_get_by_id_as_anonymous_user"""
+
         # Arrange
         persistent_query_periodic_table_id = (
             self.fixture.persistent_query_periodic_table_1.id
@@ -85,6 +92,8 @@ class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
                 )
 
     def test_get_by_id_as_user_not_owner(self):
+        """test_get_by_id_as_user_not_owner"""
+
         # Arrange
         persistent_query_periodic_table_id = (
             self.fixture.persistent_query_periodic_table_1.id
@@ -104,9 +113,12 @@ class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
 
 
 class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Get By Name"""
+
     fixture = fixture_persistent_query_periodic_table
 
     def test_get_by_name_as_superuser_returns_persistent_query_periodic_table(self):
+        """test_get_by_name_as_superuser_returns_persistent_query_periodic_table"""
 
         # Arrange
         persistent_query_periodic_table_name = (
@@ -127,6 +139,7 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         )
 
     def test_get_by_name_as_owner_returns_persistent_query_periodic_table(self):
+        """test_get_by_name_as_owner_returns_persistent_query_periodic_table"""
 
         # Arrange
         persistent_query_periodic_table_name = (
@@ -147,6 +160,8 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         )
 
     def test_get_by_name_as_user_not_owner(self):
+        """test_get_by_name_as_user_not_owner"""
+
         # Arrange
         persistent_query_periodic_table_name = (
             self.fixture.persistent_query_periodic_table_1.name
@@ -164,6 +179,8 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         )
 
     def test_get_by_name_as_anonymous_user(self):
+        """test_get_by_name_as_anonymous_user"""
+
         # Arrange
         persistent_query_periodic_table_name = (
             self.fixture.persistent_query_periodic_table_1.name
@@ -188,11 +205,15 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
 
 
 class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Delete"""
+
     fixture = fixture_persistent_query_periodic_table
 
-    def test_delete_others_persistent_query_periodic_table_as_superuser_deletes_persistent_query_periodic_table(
+    def test_delete_others_as_superuser_deletes_persistent_query_periodic_table(
         self,
     ):
+        """test_delete_others_as_superuser_deletes_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         mock_user = create_mock_user("0", is_staff=True, is_superuser=True)
@@ -202,9 +223,11 @@ class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
             persistent_query_periodic_table, mock_user
         )
 
-    def test_delete_own_persistent_query_periodic_table_deletes_persistent_query_periodic_table(
+    def test_delete_own_table_deletes_persistent_query_periodic_table(
         self,
     ):
+        """test_delete_own_table_deletes_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         mock_user = create_mock_user("1")
@@ -214,7 +237,9 @@ class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
             persistent_query_periodic_table, mock_user
         )
 
-    def test_delete_others_persistent_query_periodic_table_raises_error(self):
+    def test_delete_others_as_user_raises_error(self):
+        """test_delete_others_as_user_raises_error"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         mock_user = create_mock_user("0")
@@ -225,9 +250,11 @@ class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
                 persistent_query_periodic_table, mock_user
             )
 
-    def test_delete_others_user_persistent_query_periodic_table_as_anonymous_raises_error(
+    def test_delete_others_as_anonymous_raises_error(
         self,
     ):
+        """test_delete_others_as_anonymous_raises_error"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
 
@@ -239,11 +266,15 @@ class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
 
 
 class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Update"""
+
     fixture = fixture_persistent_query_periodic_table
 
-    def test_update_others_persistent_query_periodic_table_as_superuser_updates_persistent_query_periodic_table(
+    def test_update_others_as_superuser_updates_persistent_query_periodic_table(
         self,
     ):
+        """test_update_others_as_superuser_updates_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         persistent_query_periodic_table.name = (
@@ -258,9 +289,11 @@ class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
         self.assertTrue(isinstance(result, PersistentQueryPeriodicTable))
         self.assertTrue(result.name, "new_name_persistent_query_periodic_table_1")
 
-    def test_update_own_persistent_query_periodic_table_updates_persistent_query_periodic_table(
+    def test_update_own_updates_persistent_query_periodic_table(
         self,
     ):
+        """test_update_own_updates_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         mock_user = create_mock_user("1")
@@ -275,7 +308,9 @@ class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
         self.assertTrue(isinstance(result, PersistentQueryPeriodicTable))
         self.assertTrue(result.name, "new_name_persistent_query_periodic_table_1")
 
-    def test_update_others_persistent_query_periodic_table_raises_error(self):
+    def test_update_others_as_user_raises_error(self):
+        """test_update_others_as_user_raises_error"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
         persistent_query_periodic_table.name = (
@@ -289,9 +324,11 @@ class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
                 persistent_query_periodic_table, mock_user
             )
 
-    def test_update_others_user_persistent_query_periodic_table_as_anonymous_raises_error(
+    def test_update_others_as_anonymous_raises_error(
         self,
     ):
+        """test_update_others_as_anonymous_raises_error"""
+
         # Arrange
         persistent_query_periodic_table = self.fixture.persistent_query_periodic_table_1
 
@@ -303,11 +340,15 @@ class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
 
 
 class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Create"""
+
     fixture = fixture_persistent_query_periodic_table
 
-    def test_create_others_persistent_query_periodic_table_as_superuser_creates_persistent_query_periodic_table(
+    def test_create_for_others_as_superuser_creates_persistent_query_periodic_table(
         self,
     ):
+        """test_create_for_others_as_superuser_creates_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             name="new_persistent_query_periodic_table", user_id="0"
@@ -321,9 +362,11 @@ class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
         self.assertTrue(isinstance(result, PersistentQueryPeriodicTable))
         self.assertTrue(result.name, "new_persistent_query_periodic_table")
 
-    def test_create_persistent_query_periodic_table_as_user_creates_persistent_query_periodic_table(
+    def test_create_as_user_creates_persistent_query_periodic_table(
         self,
     ):
+        """test_create_as_user_creates_persistent_query_periodic_table"""
+
         # Arrange
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             name="new_persistent_query_periodic_table", user_id="1"
@@ -338,7 +381,9 @@ class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
         self.assertTrue(isinstance(result, PersistentQueryPeriodicTable))
         self.assertTrue(result.name, "new_persistent_query_periodic_table")
 
-    def test_create_persistent_query_periodic_table_as_anonymous_user(self):
+    def test_create_as_anonymous_user(self):
+        """test_create_as_anonymous_user"""
+
         # Arrange
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             name="new_persistent_query_periodic_table", user_id="None"
@@ -361,9 +406,13 @@ class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
 
 
 class TestPersistentQueryPeriodicTableGetAll(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Get All"""
+
     fixture = fixture_persistent_query_periodic_table
 
     def test_get_all_as_superuser_returns_all_persistent_query_periodic_table(self):
+        """test_get_all_as_superuser_returns_all_persistent_query_periodic_table"""
+
         # Arrange
         mock_user = create_mock_user("0", is_staff=True, is_superuser=True)
 
@@ -374,6 +423,8 @@ class TestPersistentQueryPeriodicTableGetAll(MongoIntegrationBaseTestCase):
         self.assertTrue(len(result), 3)
 
     def test_get_all_as_user_raises_error(self):
+        """test_get_all_as_user_raises_error"""
+
         # Arrange
         mock_user = create_mock_user("1")
 
@@ -382,17 +433,23 @@ class TestPersistentQueryPeriodicTableGetAll(MongoIntegrationBaseTestCase):
             persistent_query_periodic_table_api.get_all(mock_user)
 
     def test_get_all_as_anonymous_user_raises_error(self):
+        """test_get_all_as_anonymous_user_raises_error"""
+
         # Assert
         with self.assertRaises(AccessControlError):
             persistent_query_periodic_table_api.get_all(AnonymousUser())
 
 
 class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase):
+    """Test Persistent Query Periodic Table Get All By User"""
+
     fixture = fixture_persistent_query_periodic_table
 
     def test_get_all_by_user_as_superuser_returns_all_user_persistent_query_periodic_table(
         self,
     ):
+        """test_get_all_by_user_as_superuser_returns_all_user_persistent_query_periodic_table"""
+
         # Arrange
         mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
 
@@ -403,6 +460,8 @@ class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase)
         self.assertTrue(len(result), 1)
 
     def test_get_all_by_user_returns_all_user_persistent_query_periodic_table(self):
+        """test_get_all_by_user_returns_all_user_persistent_query_periodic_table"""
+
         # Arrange
         mock_user = create_mock_user("1")
 
@@ -413,38 +472,8 @@ class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase)
         self.assertTrue(len(result), 1)
 
     def test_get_all_as_anonymous_user_raises_error(self):
-        # Assert
-        with self.assertRaises(AccessControlError):
-            persistent_query_periodic_table_api.get_all_by_user(AnonymousUser())
-
-
-class TestPersistentQueryPeriodicTableGetAllByUser(MongoIntegrationBaseTestCase):
-    fixture = fixture_persistent_query_periodic_table
-
-    def test_get_all_by_user_as_superuser_returns_all_user_persistent_query_periodic_table(
-        self,
-    ):
-        # Arrange
-        mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
-
-        # Act
-        result = persistent_query_periodic_table_api.get_all_by_user(mock_user)
+        """test_get_all_as_anonymous_user_raises_error"""
 
         # Assert
-        self.assertTrue(len(result), 1)
-
-    def test_get_all_by_user_returns_all_user_persistent_query_periodic_table(self):
-        # Arrange
-        mock_user = create_mock_user("1")
-
-        # Act
-        result = persistent_query_periodic_table_api.get_all_by_user(mock_user)
-
-        # Assert
-        self.assertTrue(len(result), 1)
-
-    def test_get_all_as_anonymous_user(self):
-
-        # Act
         with self.assertRaises(AccessControlError):
             persistent_query_periodic_table_api.get_all_by_user(AnonymousUser())

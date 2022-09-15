@@ -1,6 +1,7 @@
 """ Persistent Query Periodic table model
 """
-from mongoengine import errors as mongoengine_errors
+
+from django.core.exceptions import ObjectDoesNotExist
 
 from core_explore_common_app.components.abstract_persistent_query.models import (
     AbstractPersistentQuery,
@@ -10,6 +11,12 @@ from core_main_app.commons import exceptions
 
 class PersistentQueryPeriodicTable(AbstractPersistentQuery):
     """Persistent Query Periodic Table"""
+
+    class Meta:
+        """Meta"""
+
+        verbose_name = "Persistent Query by Periodic Table"
+        verbose_name_plural = "Persistent Queries by Periodic Table"
 
     @staticmethod
     def get_by_id(query_id):
@@ -22,11 +29,11 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
 
         """
         try:
-            return PersistentQueryPeriodicTable.objects().get(pk=query_id)
-        except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
-        except Exception as e:
-            raise exceptions.ModelError(str(e))
+            return PersistentQueryPeriodicTable.objects.get(pk=query_id)
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
+        except Exception as exception:
+            raise exceptions.ModelError(str(exception))
 
     @staticmethod
     def get_by_name(query_name):
@@ -39,11 +46,11 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
 
         """
         try:
-            return PersistentQueryPeriodicTable.objects().get(name=query_name)
-        except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
-        except Exception as e:
-            raise exceptions.ModelError(str(e))
+            return PersistentQueryPeriodicTable.objects.get(name=query_name)
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
+        except Exception as exception:
+            raise exceptions.ModelError(str(exception))
 
     @staticmethod
     def get_all():
@@ -65,7 +72,7 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         Returns:
 
         """
-        return PersistentQueryPeriodicTable.objects(user_id=str(user_id))
+        return PersistentQueryPeriodicTable.objects.filter(user_id=str(user_id)).all()
 
     @staticmethod
     def get_none():
@@ -74,4 +81,4 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         Returns:
 
         """
-        return PersistentQueryPeriodicTable.objects().none()
+        return PersistentQueryPeriodicTable.objects.none()

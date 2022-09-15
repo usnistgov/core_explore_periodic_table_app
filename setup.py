@@ -1,10 +1,14 @@
+""" Setup for core explore periodic table app
+"""
 from os import chdir, pardir
 from os.path import join, exists, dirname, normpath, abspath
-from setuptools import find_packages, setup
 from re import sub
+
+from setuptools import find_packages, setup
 
 
 def req_link(external_url):
+    """req_link"""
     egg_link = sub(r"https://[^=]+=", "", external_url)
     return "==".join(egg_link.rsplit("-", 1))
 
@@ -32,7 +36,7 @@ chdir(normpath(join(abspath(__file__), pardir)))
 
 setup(
     name="core_explore_periodic_table_app",
-    version="1.9.0",
+    version="2.0.0-beta2",
     description="Core explore periodic table capabilities for the curator core project",
     long_description=long_desc,
     author="NIST IT Lab",

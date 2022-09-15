@@ -1,4 +1,4 @@
 """ Rights for core explore periodic table app
 """
-explore_periodic_table_content_type = "core_explore_periodic_table_app"
-explore_periodic_table_access = "access_explore_periodic_table"
+EXPLORE_PERIODIC_TABLE_CONTENT_TYPE = "core_explore_periodic_table_app"
+EXPLORE_PERIODIC_TABLE_ACCESS = "access_explore_periodic_table"
