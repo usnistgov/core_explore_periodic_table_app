@@ -3,7 +3,9 @@
 from unittest import TestCase, mock
 
 from core_main_app.commons import exceptions
-from core_explore_keyword_app.components.search_operator.models import SearchOperator
+from core_explore_keyword_app.components.search_operator.models import (
+    SearchOperator,
+)
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
@@ -19,10 +21,15 @@ class TestsApiGetAll(TestCase):
     def test_returns_no_error(self, mock_get_all):
         """test_returns_no_error"""
 
-        expected_result = ["search_operator_mapping1", "search_operator_mapping2"]
+        expected_result = [
+            "search_operator_mapping1",
+            "search_operator_mapping2",
+        ]
         mock_get_all.return_value = expected_result
 
-        self.assertListEqual(search_operator_mapping_api.get_all(), expected_result)
+        self.assertListEqual(
+            search_operator_mapping_api.get_all(), expected_result
+        )
 
 
 class TestsApiGetById(TestCase):
@@ -43,7 +50,9 @@ class TestsApiGetById(TestCase):
     def test_incorrect_id_raises_api_error(self, mock_get_by_id):
         """test_incorrect_id_raises_api_error"""
 
-        mock_get_by_id.side_effect = exceptions.ModelError(message="mock error")
+        mock_get_by_id.side_effect = exceptions.ModelError(
+            message="mock error"
+        )
 
         with self.assertRaises(exceptions.ModelError):
             search_operator_mapping_api.get_by_id("mock_id")
@@ -52,7 +61,9 @@ class TestsApiGetById(TestCase):
     def test_not_exist_raises_api_error(self, mock_get_by_id):
         """test_not_exist_raises_api_error"""
 
-        mock_get_by_id.side_effect = exceptions.DoesNotExist(message="mock error")
+        mock_get_by_id.side_effect = exceptions.DoesNotExist(
+            message="mock error"
+        )
 
         with self.assertRaises(exceptions.DoesNotExist):
             search_operator_mapping_api.get_by_id("mock_id")
@@ -109,7 +120,9 @@ class TestsApiUpsert(TestCase):
         mock_save.side_effect = exceptions.NotUniqueError(message="mock error")
 
         with self.assertRaises(exceptions.NotUniqueError):
-            search_operator_mapping_api.upsert(self.mock_search_operator_mapping)
+            search_operator_mapping_api.upsert(
+                self.mock_search_operator_mapping
+            )
 
 
 class TestsApiDelete(TestCase):

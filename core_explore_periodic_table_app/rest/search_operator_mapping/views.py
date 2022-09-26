@@ -45,7 +45,9 @@ class SearchOperatorsMapping(APIView):
         try:
 
             # Get objects
-            search_operator_mapping_object_list = search_operator_mapping_api.get_all()
+            search_operator_mapping_object_list = (
+                search_operator_mapping_api.get_all()
+            )
 
             # Serialize object
             search_operator_mapping_serializer = self.serializer(
@@ -54,11 +56,14 @@ class SearchOperatorsMapping(APIView):
 
             # Return response
             return Response(
-                search_operator_mapping_serializer.data, status=status.HTTP_200_OK
+                search_operator_mapping_serializer.data,
+                status=status.HTTP_200_OK,
             )
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def post(self, request):
         """Create a search operator mapping
@@ -110,10 +115,14 @@ class SearchOperatorsMapping(APIView):
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except exceptions.ApiError as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
         except Exception as exception:
             content = {"message": str(exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class SearchOperatorMappingDetail(APIView):
@@ -135,10 +144,14 @@ class SearchOperatorMappingDetail(APIView):
         """
         try:
             # Get object
-            search_operator_mapping = search_operator_mapping_api.get_by_id(pk=pk)
+            search_operator_mapping = search_operator_mapping_api.get_by_id(
+                pk=pk
+            )
 
             # Serialize object
-            serializer = SearchOperatorMappingSerializer(search_operator_mapping)
+            serializer = SearchOperatorMappingSerializer(
+                search_operator_mapping
+            )
 
             # Return response
             return Response(serializer.data)
@@ -147,7 +160,9 @@ class SearchOperatorMappingDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def patch(self, request, pk):
         """Update a search operator mapping
@@ -173,13 +188,17 @@ class SearchOperatorMappingDetail(APIView):
         """
         try:
             # Get object
-            search_operator_mapping = search_operator_mapping_api.get_by_id(pk=pk)
+            search_operator_mapping = search_operator_mapping_api.get_by_id(
+                pk=pk
+            )
 
             # Build serializer
-            search_operator_mapping_serializer = SearchOperatorMappingSerializer(
-                instance=search_operator_mapping,
-                data=request.data,
-                partial=True,
+            search_operator_mapping_serializer = (
+                SearchOperatorMappingSerializer(
+                    instance=search_operator_mapping,
+                    data=request.data,
+                    partial=True,
+                )
             )
 
             # Validate and save search operator
@@ -187,7 +206,8 @@ class SearchOperatorMappingDetail(APIView):
             search_operator_mapping_serializer.save()
 
             return Response(
-                search_operator_mapping_serializer.data, status=status.HTTP_200_OK
+                search_operator_mapping_serializer.data,
+                status=status.HTTP_200_OK,
             )
         except ValidationError as validation_exception:
             content = {"message": validation_exception.detail}
@@ -197,7 +217,9 @@ class SearchOperatorMappingDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def delete(self, request, pk):
         """Delete a search operator mapping
@@ -230,4 +252,6 @@ class SearchOperatorMappingDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

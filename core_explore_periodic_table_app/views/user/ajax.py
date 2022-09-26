@@ -1,7 +1,9 @@
 """Explore periodic table app Ajax views
 """
 
-from core_explore_common_app.views.user.ajax import CreatePersistentQueryUrlView
+from core_explore_common_app.views.user.ajax import (
+    CreatePersistentQueryUrlView,
+)
 from core_explore_periodic_table_app.components.persistent_query_periodic_table.models import (
     PersistentQueryPeriodicTable,
 )

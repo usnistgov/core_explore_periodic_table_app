@@ -43,7 +43,9 @@ class AdminPersistentQueryPeriodicTableList(APIView):
 
         try:
             # Get object
-            object_list = persistent_query_periodic_table_api.get_all(request.user)
+            object_list = persistent_query_periodic_table_api.get_all(
+                request.user
+            )
 
             # Serialize object
             serializer = self.serializer(object_list, many=True)
@@ -55,7 +57,9 @@ class AdminPersistentQueryPeriodicTableList(APIView):
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def post(self, request):
         """Create a persistent query periodic able
@@ -107,7 +111,9 @@ class AdminPersistentQueryPeriodicTableList(APIView):
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class PersistentQueryPeriodicTableList(APIView):
@@ -149,7 +155,9 @@ class PersistentQueryPeriodicTableList(APIView):
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def post(self, request):
         """Create a new persistent query periodic table
@@ -195,7 +203,9 @@ class PersistentQueryPeriodicTableList(APIView):
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class PersistentQueryPeriodicTableDetail(APIView):
@@ -242,7 +252,9 @@ class PersistentQueryPeriodicTableDetail(APIView):
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def patch(self, request, pk):
         """Update a persistent query periodic table
@@ -303,7 +315,9 @@ class PersistentQueryPeriodicTableDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def delete(self, request, pk):
         """Delete a persistent query periodic table
@@ -343,7 +357,9 @@ class PersistentQueryPeriodicTableDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class PersistentQueryPeriodicTableByName(APIView):
@@ -373,7 +389,9 @@ class PersistentQueryPeriodicTableByName(APIView):
         try:
             # Get object
             persistent_query_periodic_table = (
-                persistent_query_periodic_table_api.get_by_name(name, request.user)
+                persistent_query_periodic_table_api.get_by_name(
+                    name, request.user
+                )
             )
 
             # Serialize object
@@ -389,4 +407,6 @@ class PersistentQueryPeriodicTableByName(APIView):
             return Response(content, status=status.HTTP_403_FORBIDDEN)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

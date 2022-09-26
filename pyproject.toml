@@ -1,0 +1,7 @@
+[tool.black]
+line-length = 79
+target-version = ['py36']
+include = '\.pyi?$'
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "ex", "pk", "logger", "default_app_config"]

@@ -1,8 +1,12 @@
 """ Fixtures files for Data
 """
 
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
-from core_explore_keyword_app.components.search_operator.models import SearchOperator
+from core_main_app.utils.integration_tests.fixture_interface import (
+    FixtureInterface,
+)
+from core_explore_keyword_app.components.search_operator.models import (
+    SearchOperator,
+)
 from core_explore_periodic_table_app.components.search_operator_mapping.models import (
     SearchOperatorMapping,
 )

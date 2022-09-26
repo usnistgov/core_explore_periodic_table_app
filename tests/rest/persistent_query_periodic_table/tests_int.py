@@ -127,7 +127,9 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
@@ -143,12 +145,15 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
         self.assertEqual(
-            response.data["name"], self.fixture.persistent_query_periodic_table_1.name
+            response.data["name"],
+            self.fixture.persistent_query_periodic_table_1.name,
         )
 
     def test_get_other_user_persistent_query_periodic_table(self):
@@ -161,23 +166,30 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
 
         self.assertEqual(
-            response.data["name"], self.fixture.persistent_query_periodic_table_1.name
+            response.data["name"],
+            self.fixture.persistent_query_periodic_table_1.name,
         )
 
-    def test_get_other_user_persistent_query_periodic_table_as_anonymous_user(self):
+    def test_get_other_user_persistent_query_periodic_table_as_anonymous_user(
+        self,
+    ):
         """test_get_other_user_persistent_query_periodic_table_as_anonymous_user"""
 
         # Act
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             AnonymousUser(),
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
@@ -209,13 +221,17 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_delete(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_delete_other_user_persistent_query_periodic_table_returns_http_403(self):
+    def test_delete_other_user_persistent_query_periodic_table_returns_http_403(
+        self,
+    ):
         """test_delete_other_user_persistent_query_periodic_table_returns_http_403"""
 
         # Arrange
@@ -225,7 +241,9 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_delete(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
@@ -247,7 +265,9 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         # Assert
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_patch_other_user_persistent_query_periodic_table_returns_http_400(self):
+    def test_patch_other_user_persistent_query_periodic_table_returns_http_400(
+        self,
+    ):
         """test_patch_other_user_persistent_query_periodic_table_returns_http_400"""
 
         # Arrange
@@ -257,7 +277,9 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_patch(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
         )
 
         # Assert
@@ -273,7 +295,9 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_patch(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableDetail.as_view(),
             user,
-            param={"pk": str(self.fixture.persistent_query_periodic_table_1.id)},
+            param={
+                "pk": str(self.fixture.persistent_query_periodic_table_1.id)
+            },
             data={"name": "new_name"},
         )
 
@@ -317,7 +341,11 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableByName.as_view(),
             user,
-            param={"name": str(self.fixture.persistent_query_periodic_table_1.name)},
+            param={
+                "name": str(
+                    self.fixture.persistent_query_periodic_table_1.name
+                )
+            },
         )
 
         # Assert
@@ -333,12 +361,17 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableByName.as_view(),
             user,
-            param={"name": str(self.fixture.persistent_query_periodic_table_1.name)},
+            param={
+                "name": str(
+                    self.fixture.persistent_query_periodic_table_1.name
+                )
+            },
         )
 
         # Assert
         self.assertEqual(
-            response.data["name"], self.fixture.persistent_query_periodic_table_1.name
+            response.data["name"],
+            self.fixture.persistent_query_periodic_table_1.name,
         )
 
     def test_get_other_user_persistent_query_periodic_table_by_name(self):
@@ -351,12 +384,17 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableByName.as_view(),
             user,
-            param={"name": str(self.fixture.persistent_query_periodic_table_1.name)},
+            param={
+                "name": str(
+                    self.fixture.persistent_query_periodic_table_1.name
+                )
+            },
         )
 
         # Assert
         self.assertEqual(
-            response.data["name"], self.fixture.persistent_query_periodic_table_1.name
+            response.data["name"],
+            self.fixture.persistent_query_periodic_table_1.name,
         )
 
     def test_get_other_user_persistent_query_periodic_table_by_name_as_anonymous_user(
@@ -368,7 +406,9 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableByName.as_view(),
             AnonymousUser(),
-            param={"name": self.fixture.persistent_query_periodic_table_1.name},
+            param={
+                "name": self.fixture.persistent_query_periodic_table_1.name
+            },
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

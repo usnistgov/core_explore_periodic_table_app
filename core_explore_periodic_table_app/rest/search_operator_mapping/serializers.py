@@ -29,7 +29,9 @@ class SearchOperatorMappingSerializer(ModelSerializer):
         new_search_operator_id = validated_data["search_operator"]
 
         # Create instance from the validated data and insert it in DB
-        instance = SearchOperatorMapping(search_operator=new_search_operator_id)
+        instance = SearchOperatorMapping(
+            search_operator=new_search_operator_id
+        )
         search_operator_mapping_api.upsert(instance)
 
         return instance

@@ -34,5 +34,6 @@ def init_permissions(apps):
         default_group.permissions.add(explore_access_perm)
     except Exception as exception:
         logger.error(
-            "Impossible to init explore_periodic_table permissions: %s", str(exception)
+            "Impossible to init explore_periodic_table permissions: %s",
+            str(exception),
         )

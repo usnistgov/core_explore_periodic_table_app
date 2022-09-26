@@ -114,21 +114,23 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                     "user_id": user_id,
                     "elements": elements,
                     "global_templates": version_managers,
-                    "order_by_field": super().build_sorting_context_array(query),
+                    "order_by_field": super().build_sorting_context_array(
+                        query
+                    ),
                     "user_templates": version_managers,
                 }
                 # set the correct ordering for the context
                 if periodic_table_data_form["order_by_field"] != 0:
                     default_order = periodic_table_data_form["order_by_field"]
             except Exception as exception:
-                error = (
-                    "An unexpected error occurred while loading the query: {}.".format(
-                        str(exception)
-                    )
+                error = "An unexpected error occurred while loading the query: {}.".format(
+                    str(exception)
                 )
                 return {"error": error}
 
-        search_form = PeriodicTableForm(data=periodic_table_data_form, request=request)
+        search_form = PeriodicTableForm(
+            data=periodic_table_data_form, request=request
+        )
         return self._format_keyword_search_context(
             search_form, error, None, default_order
         )
@@ -179,22 +181,35 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                 # get form values
                 query_id = search_form.cleaned_data.get("query_id", None)
                 elements = search_form.cleaned_data.get("elements", None)
-                global_templates = search_form.cleaned_data.get("global_templates", [])
-                user_templates = search_form.cleaned_data.get("user_templates", [])
+                global_templates = search_form.cleaned_data.get(
+                    "global_templates", []
+                )
+                user_templates = search_form.cleaned_data.get(
+                    "user_templates", []
+                )
                 order_by_field_array = (
                     search_form.cleaned_data.get("order_by_field", "")
                     .strip()
                     .split(";")
                 )
                 # get all template version manager ids
-                template_version_manager_ids = global_templates + user_templates
+                template_version_manager_ids = (
+                    global_templates + user_templates
+                )
                 # from ids, get all version manager
-                version_manager_list = template_version_manager_api.get_by_id_list(
-                    template_version_manager_ids, request=request
+                version_manager_list = (
+                    template_version_manager_api.get_by_id_list(
+                        template_version_manager_ids, request=request
+                    )
                 )
                 # from all version manager, build a list of all version (template)
                 template_ids = []
-                list([template_ids.extend(x.versions) for x in version_manager_list])
+                list(
+                    [
+                        template_ids.extend(x.versions)
+                        for x in version_manager_list
+                    ]
+                )
                 if query_id is None or elements is None:
                     error = "Expected parameters are not provided"
                 else:
@@ -220,9 +235,13 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                             warning = str(ex)
                             element_search_operators = ""
 
-                        query.content = self._build_query(element_search_operators)
+                        query.content = self._build_query(
+                            element_search_operators
+                        )
                         # set the data-sources filter value according to the POST request field
-                        for data_sources_index in range(len(query.data_sources)):
+                        for data_sources_index in range(
+                            len(query.data_sources)
+                        ):
                             # update the data-source filter only if it's not a new data-source
                             # (the default filter value is already added when the data-source
                             # is created)
@@ -241,7 +260,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                     else "An unexpected error occurred while retrieving the query."
                 )
             except Exception as exception:
-                error = "An unexpected error occurred: {}.".format(str(exception))
+                error = "An unexpected error occurred: {}.".format(
+                    str(exception)
+                )
         else:
             error = "An unexpected error occurred: the form is not valid."
 
@@ -322,7 +343,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
                     str(so_mapping.search_operator.id)
                 )
                 for element in elements_list:
-                    element and result.append(f"{search_operator.name}:{element}")
+                    element and result.append(
+                        f"{search_operator.name}:{element}"
+                    )
         else:
             raise Exception(
                 "No search operators has been configured, please contact an administrator."
@@ -373,7 +396,9 @@ class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
 
     @staticmethod
     def _get_persistent_query_by_id(persistent_query_id, user):
-        return persistent_query_periodic_table_api.get_by_id(persistent_query_id, user)
+        return persistent_query_periodic_table_api.get_by_id(
+            persistent_query_id, user
+        )
 
     @staticmethod
     def _get_persistent_query_by_name(persistent_query_name, user):

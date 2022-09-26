@@ -71,7 +71,9 @@ def _manage_periodic_table_index_post(request):
 
     """
     # get the new id
-    selected_search_operator_list = request.POST.getlist("search_operator_list")
+    selected_search_operator_list = request.POST.getlist(
+        "search_operator_list"
+    )
     search_operator_mapping = list(search_operator_mapping_api.get_all())
     search_operator_list = list(search_operator_api.get_all())
 
@@ -85,7 +87,11 @@ def _manage_periodic_table_index_post(request):
             None,
         )
         find_in_selected = next(
-            (y for y in selected_search_operator_list if y == str(search_operator.id)),
+            (
+                y
+                for y in selected_search_operator_list
+                if y == str(search_operator.id)
+            ),
             None,
         )
         if find_in_mapping and not find_in_selected:
@@ -108,7 +114,9 @@ def _manage_periodic_table_index_post(request):
 
     context = {"associated_form": associated_form}
 
-    messages.add_message(request, messages.INFO, "Information saved with success.")
+    messages.add_message(
+        request, messages.INFO, "Information saved with success."
+    )
 
     return admin_render(
         request,

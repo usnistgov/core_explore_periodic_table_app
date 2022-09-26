@@ -72,7 +72,9 @@ class PersistentQueryPeriodicTable(AbstractPersistentQuery):
         Returns:
 
         """
-        return PersistentQueryPeriodicTable.objects.filter(user_id=str(user_id)).all()
+        return PersistentQueryPeriodicTable.objects.filter(
+            user_id=str(user_id)
+        ).all()
 
     @staticmethod
     def get_none():

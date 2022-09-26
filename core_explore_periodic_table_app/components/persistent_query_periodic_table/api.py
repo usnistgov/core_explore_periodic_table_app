@@ -38,7 +38,9 @@ def get_by_id(persistent_query_periodic_table_id, user):
     Returns:
 
     """
-    return PersistentQueryPeriodicTable.get_by_id(persistent_query_periodic_table_id)
+    return PersistentQueryPeriodicTable.get_by_id(
+        persistent_query_periodic_table_id
+    )
 
 
 @access_control(can_read_persistent_query)

@@ -6,12 +6,16 @@ from menu import Menu, MenuItem
 
 Menu.add_item(
     "explorer",
-    MenuItem("Query by Periodic Table", reverse("core_explore_periodic_table_index")),
+    MenuItem(
+        "Query by Periodic Table", reverse("core_explore_periodic_table_index")
+    ),
 ),
 
 periodic_table_children = (
     MenuItem(
-        "Settings", reverse("core-admin:manage_periodic_table_index"), icon="table"
+        "Settings",
+        reverse("core-admin:manage_periodic_table_index"),
+        icon="table",
     ),
 )
 

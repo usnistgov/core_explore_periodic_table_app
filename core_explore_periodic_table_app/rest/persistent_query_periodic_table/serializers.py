@@ -26,7 +26,9 @@ class PersistentQueryPeriodicTableSerializer(ModelSerializer):
         # Create instance from the validated data and insert it in DB
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             user_id=str(self.context["request"].user.id),
-            content=validated_data["content"] if "content" in validated_data else None,
+            content=validated_data["content"]
+            if "content" in validated_data
+            else None,
             name=validated_data["name"] if "name" in validated_data else None,
         )
 
@@ -34,7 +36,9 @@ class PersistentQueryPeriodicTableSerializer(ModelSerializer):
             persistent_query_periodic_table, self.context["request"].user
         )
         if "templates" in validated_data:
-            persistent_query_periodic_table.templates.set(validated_data["templates"])
+            persistent_query_periodic_table.templates.set(
+                validated_data["templates"]
+            )
 
         return persistent_query_periodic_table
 
@@ -53,7 +57,9 @@ class PersistentQueryPeriodicTableSerializer(ModelSerializer):
             persistent_query_periodic_table, self.context["request"].user
         )
         if "templates" in validated_data:
-            persistent_query_periodic_table.templates.set(validated_data["templates"])
+            persistent_query_periodic_table.templates.set(
+                validated_data["templates"]
+            )
         return persistent_query_periodic_table
 
 
@@ -73,12 +79,16 @@ class PersistentQueryPeriodicTableAdminSerializer(ModelSerializer):
         # Create data
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             user_id=validated_data["user_id"],
-            content=validated_data["content"] if "content" in validated_data else None,
+            content=validated_data["content"]
+            if "content" in validated_data
+            else None,
             name=validated_data["name"] if "name" in validated_data else None,
         )
         persistent_query_periodic_table_api.upsert(
             persistent_query_periodic_table, self.context["request"].user
         )
         if "templates" in validated_data:
-            persistent_query_periodic_table.templates.set(validated_data["templates"])
+            persistent_query_periodic_table.templates.set(
+                validated_data["templates"]
+            )
         return persistent_query_periodic_table

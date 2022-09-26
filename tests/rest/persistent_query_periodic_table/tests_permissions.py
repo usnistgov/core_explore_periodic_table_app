@@ -419,7 +419,9 @@ class TestPersistentQueryPeriodicTableByNameGet(SimpleTestCase):
         """test_anonymous_returns_http_403"""
 
         mock_persistent_query_periodic_table_serializer_data.return_value = {}
-        mock_persistent_query_periodic_table_api_get_by_name.return_value = None
+        mock_persistent_query_periodic_table_api_get_by_name.return_value = (
+            None
+        )
         response = RequestMock.do_request_get(
             persistent_query_periodic_table_views.PersistentQueryPeriodicTableByName.as_view(),
             AnonymousUser(),
@@ -438,7 +440,9 @@ class TestPersistentQueryPeriodicTableByNameGet(SimpleTestCase):
         """test_authenticated_returns_http_200"""
 
         mock_persistent_query_periodic_table_serializer_data.return_value = {}
-        mock_persistent_query_periodic_table_api_get_by_name.return_value = None
+        mock_persistent_query_periodic_table_api_get_by_name.return_value = (
+            None
+        )
         mock_user = create_mock_user("1")
 
         response = RequestMock.do_request_get(
@@ -459,7 +463,9 @@ class TestPersistentQueryPeriodicTableByNameGet(SimpleTestCase):
         """test_superuser_returns_http_200"""
 
         mock_persistent_query_periodic_table_serializer_data.return_value = {}
-        mock_persistent_query_periodic_table_api_get_by_name.return_value = None
+        mock_persistent_query_periodic_table_api_get_by_name.return_value = (
+            None
+        )
         mock_user = create_mock_user("1", is_staff=True)
 
         response = RequestMock.do_request_get(

@@ -29,7 +29,9 @@ class TestPersistentQueryPeriodicTableGetById(TestCase):
 
         # Act # Assert
         self.assertEqual(
-            persistent_query_periodic_table_api.get_by_id("mock_id", mock_user),
+            persistent_query_periodic_table_api.get_by_id(
+                "mock_id", mock_user
+            ),
             expected_result,
         )
 
@@ -52,7 +54,9 @@ class TestPersistentQueryPeriodicTableGetById(TestCase):
         """test_persistent_query_periodic_table_get_by_id_raises_does_not_exist_error_if_not_found"""
 
         # Arrange
-        mock_get_by_id.side_effect = exceptions.DoesNotExist(message="mock error")
+        mock_get_by_id.side_effect = exceptions.DoesNotExist(
+            message="mock error"
+        )
         mock_user = create_mock_user("1")
 
         # Act # Assert
@@ -76,7 +80,9 @@ class TestsPersistentQueryPeriodicTableGetByName(TestCase):
 
         # Act # Assert
         self.assertEqual(
-            persistent_query_periodic_table_api.get_by_name("mock_name", mock_user),
+            persistent_query_periodic_table_api.get_by_name(
+                "mock_name", mock_user
+            ),
             expected_result,
         )
 
@@ -87,27 +93,35 @@ class TestsPersistentQueryPeriodicTableGetByName(TestCase):
         """test_persistent_query_periodic_table_get_by_name_raises_error_if_not_found"""
 
         # Arrange
-        mock_get_by_name.side_effect = exceptions.DoesNotExist(message="mock error")
+        mock_get_by_name.side_effect = exceptions.DoesNotExist(
+            message="mock error"
+        )
         mock_user = create_mock_user("1")
 
         # Act # Assert
         with self.assertRaises(exceptions.DoesNotExist):
-            persistent_query_periodic_table_api.get_by_name("mock_id", mock_user)
+            persistent_query_periodic_table_api.get_by_name(
+                "mock_id", mock_user
+            )
 
 
 class TestsPersistentQueryPeriodicTableUpsert(TestCase):
     """Test Persistent Query Periodic Table Upsert"""
 
     def setUp(self) -> None:
-        self.mock_persistent_query_periodic_table = PersistentQueryPeriodicTable(
-            user_id="1",
-            name="mock_periodic_table",
-            content={"content_test"},
-            data_sources=[],
+        self.mock_persistent_query_periodic_table = (
+            PersistentQueryPeriodicTable(
+                user_id="1",
+                name="mock_periodic_table",
+                content={"content_test"},
+                data_sources=[],
+            )
         )
 
     @mock.patch.object(PersistentQueryPeriodicTable, "save")
-    def test_persistent_query_periodic_table_upsert_return_data(self, mock_save):
+    def test_persistent_query_periodic_table_upsert_return_data(
+        self, mock_save
+    ):
         """test_persistent_query_periodic_table_upsert_return_data"""
 
         # Arrange
@@ -158,7 +172,8 @@ class TestsPersistentQueryPeriodicTableGetAll(TestCase):
 
         # Act # Assert
         self.assertEqual(
-            persistent_query_periodic_table_api.get_all(mock_user), expected_result
+            persistent_query_periodic_table_api.get_all(mock_user),
+            expected_result,
         )
 
     @mock.patch.object(PersistentQueryPeriodicTable, "get_all")

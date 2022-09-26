@@ -3,7 +3,9 @@
 
 from django.db import models
 
-from core_explore_keyword_app.components.search_operator.models import SearchOperator
+from core_explore_keyword_app.components.search_operator.models import (
+    SearchOperator,
+)
 
 
 class SearchOperatorMapping(models.Model):
@@ -46,4 +48,6 @@ class SearchOperatorMapping(models.Model):
         Returns:
 
         """
-        return SearchOperatorMapping.objects(search_operator=str(search_operator_id))
+        return SearchOperatorMapping.objects(
+            search_operator=str(search_operator_id)
+        )
