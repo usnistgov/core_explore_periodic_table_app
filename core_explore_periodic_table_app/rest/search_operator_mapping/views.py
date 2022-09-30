@@ -90,7 +90,7 @@ class SearchOperatorsMapping(APIView):
             serializer = SearchOperatorMappingSerializer(data=request.data)
 
             # Validate data
-            serializer.is_valid(True)
+            serializer.is_valid(raise_exception=True)
 
             # Save data
             serializer.save()
@@ -183,7 +183,7 @@ class SearchOperatorMappingDetail(APIView):
             )
 
             # Validate and save search operator
-            search_operator_mapping_serializer.is_valid(True)
+            search_operator_mapping_serializer.is_valid(raise_exception=True)
             search_operator_mapping_serializer.save()
 
             return Response(
