@@ -65,6 +65,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         # assets / modals / forms
         context = self._get(request, query_id)
 
+        # Set page title
+        context.update({"page_title": "Search By Periodic Table"})
+
         return render(
             request,
             "core_explore_periodic_table_app/user/index.html",
@@ -154,6 +157,9 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
 
         # assets / modals / forms
         context = self._post(request)
+
+        # Set page title
+        context.update({"page_title": "Search By Periodic Table"})
 
         return render(
             request,
