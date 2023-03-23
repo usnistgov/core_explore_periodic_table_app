@@ -3,21 +3,16 @@
 
 from typing import Dict, Any, List
 
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 
 import core_main_app.components.template_version_manager.api as template_version_manager_api
 import core_main_app.utils.decorators as decorators
-from core_main_app.commons.exceptions import DoesNotExist
-from core_main_app.components.template import api as template_api
-from core_main_app.settings import DATA_SORTING_FIELDS
-from core_main_app.utils.rendering import render
 from core_explore_common_app.components.query import api as query_api
 from core_explore_common_app.views.user.views import (
     ResultsView,
     ResultQueryRedirectView,
 )
-
 from core_explore_keyword_app.components.search_operator import (
     api as search_operator_api,
 )
@@ -31,8 +26,12 @@ from core_explore_periodic_table_app.components.persistent_query_periodic_table.
 from core_explore_periodic_table_app.components.search_operator_mapping import (
     api as search_operator_mapping_api,
 )
-from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
 from core_explore_periodic_table_app.permissions import rights
+from core_explore_periodic_table_app.views.user.form import PeriodicTableForm
+from core_main_app.commons.exceptions import DoesNotExist
+from core_main_app.components.template import api as template_api
+from core_main_app.settings import DATA_SORTING_FIELDS
+from core_main_app.utils.rendering import render
 
 
 class PeriodicTableBuildQueryView(KeywordSearchView):
@@ -47,7 +46,6 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         decorators.permission_required(
             content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
             permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
-            login_url=reverse_lazy("core_main_app_login"),
         )
     )
     def get(self, request, **kwargs):
@@ -142,7 +140,6 @@ class PeriodicTableBuildQueryView(KeywordSearchView):
         decorators.permission_required(
             content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
             permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
-            login_url=reverse_lazy("core_main_app_login"),
         )
     )
     def post(self, request):
@@ -394,7 +391,6 @@ class ResultQueryRedirectPeriodicSearchView(ResultQueryRedirectView):
         decorators.permission_required(
             content_type=rights.EXPLORE_PERIODIC_TABLE_CONTENT_TYPE,
             permission=rights.EXPLORE_PERIODIC_TABLE_ACCESS,
-            login_url=reverse_lazy("core_main_app_login"),
         )
     )
     def get(self, request, *args, **kwargs):
