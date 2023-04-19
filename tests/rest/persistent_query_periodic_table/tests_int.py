@@ -5,7 +5,7 @@ from django.contrib.auth.models import AnonymousUser
 from rest_framework import status
 
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
@@ -19,7 +19,7 @@ from tests.components.persistent_query_periodic_table.fixtures.fixtures import (
 fixture_data_structure = PersistentQueryPeriodicTableFixtures()
 
 
-class TestPersistentQueryPeriodicTableListAdmin(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableListAdmin(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table List Admin"""
 
     fixture = fixture_data_structure
@@ -64,7 +64,7 @@ class TestPersistentQueryPeriodicTableListAdmin(MongoIntegrationBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class TestPersistentQueryPeriodicTableList(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableList(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table List"""
 
     fixture = fixture_data_structure
@@ -107,7 +107,7 @@ class TestPersistentQueryPeriodicTableList(MongoIntegrationBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableDetail(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Detail"""
 
     fixture = fixture_data_structure
@@ -321,7 +321,7 @@ class TestPersistentQueryPeriodicTableDetail(MongoIntegrationBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
-class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableGetByName(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Get By Name"""
 
     fixture = fixture_data_structure

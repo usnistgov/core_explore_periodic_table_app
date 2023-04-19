@@ -5,7 +5,7 @@ from django.contrib.auth.models import AnonymousUser
 
 from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 
@@ -27,7 +27,7 @@ fixture_persistent_query_periodic_table = (
 )
 
 
-class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableGetById(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Get By Id"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -126,7 +126,7 @@ class TestPersistentQueryPeriodicTableGetById(MongoIntegrationBaseTestCase):
         )
 
 
-class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableGetByName(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Get By Name"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -226,7 +226,7 @@ class TestPersistentQueryPeriodicTableGetByName(MongoIntegrationBaseTestCase):
                 )
 
 
-class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableDelete(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Delete"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -295,7 +295,7 @@ class TestPersistentQueryPeriodicTableDelete(MongoIntegrationBaseTestCase):
             )
 
 
-class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableUpdate(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Update"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -381,7 +381,7 @@ class TestPersistentQueryPeriodicTableUpdate(MongoIntegrationBaseTestCase):
             )
 
 
-class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableCreate(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Create"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -447,7 +447,7 @@ class TestPersistentQueryPeriodicTableCreate(MongoIntegrationBaseTestCase):
                 )
 
 
-class TestPersistentQueryPeriodicTableGetAll(MongoIntegrationBaseTestCase):
+class TestPersistentQueryPeriodicTableGetAll(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Get All"""
 
     fixture = fixture_persistent_query_periodic_table
@@ -484,9 +484,7 @@ class TestPersistentQueryPeriodicTableGetAll(MongoIntegrationBaseTestCase):
             persistent_query_periodic_table_api.get_all(AnonymousUser())
 
 
-class TestPersistentQueryPeriodicTableGetAllByUser(
-    MongoIntegrationBaseTestCase
-):
+class TestPersistentQueryPeriodicTableGetAllByUser(IntegrationBaseTestCase):
     """Test Persistent Query Periodic Table Get All By User"""
 
     fixture = fixture_persistent_query_periodic_table

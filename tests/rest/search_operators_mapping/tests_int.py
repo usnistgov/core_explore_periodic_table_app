@@ -1,7 +1,7 @@
 """ Integration Test Persistent Query Periodic Table
 """
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
@@ -16,7 +16,7 @@ from tests.rest.search_operators_mapping.fixtures.fixtures import (
 fixture_search_operator_mapping = SearchOperatorMappingFixtures()
 
 
-class TestSearchOperatorMapping(MongoIntegrationBaseTestCase):
+class TestSearchOperatorMapping(IntegrationBaseTestCase):
     """Test Search Operator Mapping"""
 
     fixture = fixture_search_operator_mapping
