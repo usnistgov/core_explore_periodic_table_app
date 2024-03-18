@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django_celery_beat",
+    "menu",
     # Local apps
     "tests",
     "core_main_app",
@@ -62,8 +63,10 @@ TEMPLATES = [
     },
 ]
 
-
+ROOT_URLCONF = "tests.urls"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 MONGODB_INDEXING = False
 MONGODB_ASYNC_SAVE = False
+STATIC_URL = "/static/"
+ENABLE_SAML2_SSO_AUTH = False

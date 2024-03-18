@@ -114,9 +114,7 @@ def _manage_periodic_table_index_post(request):
 
     context = {"associated_form": associated_form}
 
-    messages.add_message(
-        request, messages.SUCCESS, "Information saved with success."
-    )
+    messages.add_message(request, messages.SUCCESS, "Information saved.")
 
     return admin_render(
         request,
