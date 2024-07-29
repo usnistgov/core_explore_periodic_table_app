@@ -131,7 +131,7 @@ let initSortingAutoSubmit = function() {
             clearInterval(interval);
             $(".dropdown-menu.tools-menu.filter-dropdown-menu li").click(debounce(function() {
                 submitForm();
-            }, SORTING_SUBMIT_DELAY));
+            }, 200));
         }
     }, 500);
 }
