@@ -1,5 +1,6 @@
 """ Custom admin site for the Search Operator Mapping model
 """
+
 from django.contrib import admin
 
 

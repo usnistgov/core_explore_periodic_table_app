@@ -1,5 +1,6 @@
 """ Setup for core explore periodic table app
 """
+
 from os import chdir, pardir
 from os.path import join, exists, dirname, normpath, abspath
 from re import sub

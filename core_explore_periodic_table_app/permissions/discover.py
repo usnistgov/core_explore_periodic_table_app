@@ -1,5 +1,6 @@
 """ Discover rules for core explore periodic table app.
 """
+
 import logging
 
 from core_explore_periodic_table_app.permissions import (

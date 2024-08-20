@@ -1,5 +1,6 @@
 """ Forms admin Periodic Table
 """
+
 from django import forms
 
 from core_explore_keyword_app.components.search_operator import (

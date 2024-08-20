@@ -1,5 +1,6 @@
 """ Authentication tests for PersistentQueryPeriodicTable REST API.
 """
+
 from unittest.mock import patch
 
 from django.contrib.auth.models import AnonymousUser

@@ -1,5 +1,6 @@
 """ Unit tests for PersistentQueryPeriodicTable.
 """
+
 from unittest import TestCase, mock
 
 from core_explore_periodic_table_app.components.persistent_query_periodic_table import (

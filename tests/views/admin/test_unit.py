@@ -1,5 +1,6 @@
 """ Unit tests for periodic table admin views
 """
+
 from unittest.case import TestCase
 
 from django.http.request import HttpRequest

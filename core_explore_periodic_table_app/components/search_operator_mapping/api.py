@@ -1,5 +1,6 @@
 """ PeriodicTableType api
 """
+
 from core_explore_periodic_table_app.components.search_operator_mapping.models import (
     SearchOperatorMapping,
 )

@@ -1,5 +1,6 @@
 """ Unit tests for user-side forms
 """
+
 from unittest import TestCase
 from unittest.mock import patch
 

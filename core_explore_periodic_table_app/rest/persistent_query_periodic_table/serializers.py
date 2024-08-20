@@ -1,5 +1,6 @@
 """ Serializers used for the persistent query periodic table REST API.
 """
+
 from rest_framework.serializers import ModelSerializer
 
 from core_explore_periodic_table_app.components.persistent_query_periodic_table import (
@@ -26,9 +27,11 @@ class PersistentQueryPeriodicTableSerializer(ModelSerializer):
         # Create instance from the validated data and insert it in DB
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             user_id=str(self.context["request"].user.id),
-            content=validated_data["content"]
-            if "content" in validated_data
-            else None,
+            content=(
+                validated_data["content"]
+                if "content" in validated_data
+                else None
+            ),
             name=validated_data["name"] if "name" in validated_data else None,
         )
 
@@ -79,9 +82,11 @@ class PersistentQueryPeriodicTableAdminSerializer(ModelSerializer):
         # Create data
         persistent_query_periodic_table = PersistentQueryPeriodicTable(
             user_id=validated_data["user_id"],
-            content=validated_data["content"]
-            if "content" in validated_data
-            else None,
+            content=(
+                validated_data["content"]
+                if "content" in validated_data
+                else None
+            ),
             name=validated_data["name"] if "name" in validated_data else None,
         )
         persistent_query_periodic_table_api.upsert(

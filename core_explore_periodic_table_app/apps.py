@@ -1,5 +1,6 @@
 """ Core Periodic table apps config
 """
+
 import sys
 
 from django.apps import AppConfig

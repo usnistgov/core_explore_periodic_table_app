@@ -1,5 +1,6 @@
 """Serializers used throughout the Search operator mapping Rest API
 """
+
 from rest_framework.serializers import ModelSerializer
 
 from core_explore_periodic_table_app.components.search_operator_mapping import (
