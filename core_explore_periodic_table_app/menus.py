@@ -1,5 +1,4 @@
-""" Add Explore Period Table in main menu
-"""
+"""Add Explore Period Table in main menu"""
 
 from django.urls import reverse
 from menu import Menu, MenuItem

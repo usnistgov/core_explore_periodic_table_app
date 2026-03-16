@@ -1,5 +1,4 @@
-""" REST views for the Persistent Query Periodic Table.
-"""
+"""REST views for the Persistent Query Periodic Table."""
 
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (

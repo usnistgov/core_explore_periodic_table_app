@@ -1,5 +1,4 @@
-""" Integration Test for Persistent Query PeriodicTable Rest API
-"""
+"""Integration Test for Persistent Query PeriodicTable Rest API"""
 
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import status

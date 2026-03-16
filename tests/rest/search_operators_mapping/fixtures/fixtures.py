@@ -1,5 +1,4 @@
-""" Fixtures files for Data
-"""
+"""Fixtures files for Data"""
 
 from core_main_app.utils.integration_tests.fixture_interface import (
     FixtureInterface,

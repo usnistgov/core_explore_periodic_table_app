@@ -1,5 +1,4 @@
-""" Url router for the Explore Period Table
-"""
+"""Url router for the Explore Period Table"""
 
 from django.conf.urls import include
 from django.urls import re_path

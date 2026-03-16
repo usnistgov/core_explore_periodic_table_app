@@ -1,5 +1,4 @@
-""" Url router for the explore periodic table application
-"""
+"""Url router for the explore periodic table application"""
 
 from django.conf.urls import include
 from django.urls import re_path

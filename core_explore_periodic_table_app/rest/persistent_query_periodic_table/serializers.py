@@ -1,5 +1,4 @@
-""" Serializers used for the persistent query periodic table REST API.
-"""
+"""Serializers used for the persistent query periodic table REST API."""
 
 from rest_framework.serializers import ModelSerializer
 

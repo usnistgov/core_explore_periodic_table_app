@@ -1,5 +1,4 @@
-""" Unit tests for SearchOperatorMapping API calls.
-"""
+"""Unit tests for SearchOperatorMapping API calls."""
 
 from unittest import TestCase, mock
 

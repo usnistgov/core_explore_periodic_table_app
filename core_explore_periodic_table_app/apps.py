@@ -1,5 +1,4 @@
-""" Core Periodic table apps config
-"""
+"""Core Periodic table apps config"""
 
 import sys
 

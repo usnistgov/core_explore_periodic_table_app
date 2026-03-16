@@ -1,5 +1,4 @@
-""" Authentication tests for PersistentQueryPeriodicTable REST API.
-"""
+"""Authentication tests for PersistentQueryPeriodicTable REST API."""
 
 from unittest.mock import patch
 

@@ -1,5 +1,4 @@
-""" Test Settings
-"""
+"""Test Settings"""
 
 SECRET_KEY = "fake-key"
 

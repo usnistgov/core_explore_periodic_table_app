@@ -1,5 +1,4 @@
-""" REST views for the Search operators Mapping API
-"""
+"""REST views for the Search operators Mapping API"""
 
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (

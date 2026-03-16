@@ -1,5 +1,4 @@
-"""Serializers used throughout the Search operator mapping Rest API
-"""
+"""Serializers used throughout the Search operator mapping Rest API"""
 
 from rest_framework.serializers import ModelSerializer
 

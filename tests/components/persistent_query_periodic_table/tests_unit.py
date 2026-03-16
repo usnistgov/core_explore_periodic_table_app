@@ -1,5 +1,4 @@
-""" Unit tests for PersistentQueryPeriodicTable.
-"""
+"""Unit tests for PersistentQueryPeriodicTable."""
 
 from unittest import TestCase, mock
 

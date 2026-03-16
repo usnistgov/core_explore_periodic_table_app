@@ -1,5 +1,4 @@
-""" Persistent Query Periodic table model
-"""
+"""Persistent Query Periodic table model"""
 
 from django.core.exceptions import ObjectDoesNotExist
 

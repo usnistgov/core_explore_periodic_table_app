@@ -1,5 +1,4 @@
-"""Explore periodic table app Ajax views
-"""
+"""Explore periodic table app Ajax views"""
 
 from core_explore_common_app.views.user.ajax import (
     CreatePersistentQueryUrlView,

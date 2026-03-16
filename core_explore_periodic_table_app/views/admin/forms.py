@@ -1,5 +1,4 @@
-""" Forms admin Periodic Table
-"""
+"""Forms admin Periodic Table"""
 
 from django import forms
 

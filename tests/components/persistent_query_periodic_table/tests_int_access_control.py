@@ -1,5 +1,4 @@
-""" Unit Test Persistent Query Periodic Table
-"""
+"""Unit Test Persistent Query Periodic Table"""
 
 from django.contrib.auth.models import AnonymousUser
 

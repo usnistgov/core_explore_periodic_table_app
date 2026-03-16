@@ -1,5 +1,4 @@
-""" Periodic table's views
-"""
+"""Periodic table's views"""
 
 from typing import Dict, Any, List
 

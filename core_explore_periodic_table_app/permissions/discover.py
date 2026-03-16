@@ -1,5 +1,4 @@
-""" Discover rules for core explore periodic table app.
-"""
+"""Discover rules for core explore periodic table app."""
 
 import logging
 

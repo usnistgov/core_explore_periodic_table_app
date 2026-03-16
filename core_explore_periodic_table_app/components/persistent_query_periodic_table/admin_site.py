@@ -1,5 +1,4 @@
-""" Custom admin site for the Persistent Query Periodic Table model
-"""
+"""Custom admin site for the Persistent Query Periodic Table model"""
 
 from django.contrib import admin
 

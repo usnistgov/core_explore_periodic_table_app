@@ -1,5 +1,4 @@
-""" Unit tests for periodic table admin views
-"""
+"""Unit tests for periodic table admin views"""
 
 from unittest.case import TestCase
 

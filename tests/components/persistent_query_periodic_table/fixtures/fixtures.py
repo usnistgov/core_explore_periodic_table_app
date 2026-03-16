@@ -1,5 +1,4 @@
-""" Fixtures files for Persistent Query Periodic Table
-"""
+"""Fixtures files for Persistent Query Periodic Table"""
 
 from core_main_app.utils.integration_tests.fixture_interface import (
     FixtureInterface,

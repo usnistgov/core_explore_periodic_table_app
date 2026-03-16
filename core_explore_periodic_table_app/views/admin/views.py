@@ -1,5 +1,4 @@
-""" core explore periodic table admin views
-"""
+"""core explore periodic table admin views"""
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required

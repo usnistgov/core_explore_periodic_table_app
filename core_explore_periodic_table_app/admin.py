@@ -20,7 +20,6 @@ from core_explore_periodic_table_app.components.search_operator_mapping.models i
 )
 from core_explore_periodic_table_app.views.admin import views as admin_views
 
-
 admin_urls = [
     re_path(
         r"^periodic_table$",

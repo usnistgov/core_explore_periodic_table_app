@@ -1,5 +1,4 @@
-""" Persistent Query Periodic table API
-"""
+"""Persistent Query Periodic table API"""
 
 from core_explore_common_app.access_control.api import (
     can_read_persistent_query,

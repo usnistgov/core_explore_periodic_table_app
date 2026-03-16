@@ -1,5 +1,4 @@
-""" Periodic Table Model
-"""
+"""Periodic Table Model"""
 
 from django.db import models
 

@@ -1,5 +1,4 @@
-""" Explore Periodic Table models
-"""
+"""Explore Periodic Table models"""
 
 from django.db import models
 
